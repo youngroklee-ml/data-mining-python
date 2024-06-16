@@ -1,0 +1,4 @@
+# Preface
+
+This is a book to convert example code on [https://youngroklee-ml.github.io/data-mining-techniques/](https://youngroklee-ml.github.io/data-mining-techniques/) into Python.
+
