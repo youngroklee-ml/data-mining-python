@@ -20,7 +20,7 @@ jobs:
           version: 1.4.554
 
       - name: Install Python and Dependencies
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11.9'
           cache: 'pip'
