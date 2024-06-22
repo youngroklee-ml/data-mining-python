@@ -8,6 +8,7 @@ book:
   chapters:
     - index.qmd
     - ch02_regression.qmd
+    - ch03_regularized_regression.qmd
 
 format:
   html:
