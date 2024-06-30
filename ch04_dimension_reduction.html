@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./ch05_classification.html" rel="next">
 <link href="./ch03_regularized_regression.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -169,6 +170,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dimension reduction</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch05_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -221,7 +228,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="ca9d59f3" class="cell" data-execution_count="1">
+<div id="e9d4e02e" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
@@ -233,7 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="4.1" class="anchored" data-anchor-id="example-4.10"><span class="header-section-number">4.1</span> Example 4.10</h2>
 <section id="load-data" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">4.1.1</span> Load data</h3>
-<div id="4eed4b38" class="cell" data-execution_count="2">
+<div id="b86c828d" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat2 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch4_dat2.csv"</span>, encoding<span class="op">=</span><span class="st">"euc-kr"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dat2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -427,11 +434,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="principal-component-analysis-with-statsmodels" class="level3" data-number="4.1.2">
 <h3 data-number="4.1.2" class="anchored" data-anchor-id="principal-component-analysis-with-statsmodels"><span class="header-section-number">4.1.2</span> Principal component analysis with <code>statsmodels</code></h3>
 <p>Train a PCA model.</p>
-<div id="24df25ae" class="cell" data-execution_count="3">
+<div id="e4474495" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pca_model <span class="op">=</span> sm.PCA(dat2.drop(<span class="st">"ID"</span>, axis<span class="op">=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Print a loading matrix.</p>
-<div id="41e17138" class="cell" data-execution_count="4">
+<div id="62e215d2" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pca_model.loadings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div>
@@ -498,7 +505,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Draw a scree plot.</p>
-<div id="d10e74fe" class="cell" data-execution_count="5">
+<div id="622b8c69" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> pca_model.plot_scree(log_scale<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -532,7 +539,7 @@ Note
 </div>
 <div class="callout-body-container callout-body">
 <p>The y-axis values are different from the book example, because <code>statsmodels</code> returns eigenvalues multiplied by the number of observations.</p>
-<div id="b80140c5" class="cell" data-execution_count="6">
+<div id="2c32d4fb" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Eigenvalue from statsmodels:"</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pca_model.eigenvals)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -558,7 +565,7 @@ Name: eigenvals, dtype: float64</code></pre>
 </div>
 </div>
 <p>Contribution</p>
-<div id="8091553d" class="cell" data-execution_count="7">
+<div id="2f6e537d" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pca_model.rsquare</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>ncomp
@@ -577,7 +584,7 @@ Name: rsquare, dtype: float64</code></pre>
 <h2 data-number="4.2" class="anchored" data-anchor-id="example-4.12"><span class="header-section-number">4.2</span> Example 4.12</h2>
 <section id="load-data-1" class="level3" data-number="4.2.1">
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="load-data-1"><span class="header-section-number">4.2.1</span> Load data</h3>
-<div id="2b161d00" class="cell" data-execution_count="8">
+<div id="8d105249" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dat3 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch4_dat3.csv"</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>dat3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
@@ -645,7 +652,7 @@ Name: rsquare, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="4095d428" class="cell" data-execution_count="9">
+<div id="9febf520" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat3.drop(<span class="st">'y'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> dat3[<span class="st">'y'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -654,7 +661,7 @@ Name: rsquare, dtype: float64</code></pre>
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="principal-component-analysis-with-scikit-learn"><span class="header-section-number">4.2.2</span> Principal component analysis with <code>scikit-learn</code></h3>
 <p>Use <code>PCA()</code> from <code>skearn.decomposition</code> to define a principal component analysis model. Pass <code>n_components=2</code> argument to find up to two components.</p>
 <p>Extract principal component scores for training data by calling <code>fit_transform()</code> method. The results will be used as input to a linear regression model.</p>
-<div id="841fec02" class="cell" data-execution_count="10">
+<div id="f5686b26" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pca_model <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>pc <span class="op">=</span> pca_model.fit_transform(X)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>pc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -671,7 +678,7 @@ Name: rsquare, dtype: float64</code></pre>
 <section id="linear-regression-with-first-two-principal-components" class="level3" data-number="4.2.3">
 <h3 data-number="4.2.3" class="anchored" data-anchor-id="linear-regression-with-first-two-principal-components"><span class="header-section-number">4.2.3</span> Linear regression with first two principal components</h3>
 <p>Use <code>LinearRegression()</code> from <code>sklearn.linear_model</code> to define a linear regression model. Use principal component scores as input matrix.</p>
-<div id="bf339993" class="cell" data-execution_count="11">
+<div id="5fff4d11" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pcr_model <span class="op">=</span> LinearRegression()</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>pcr_model.fit(pc, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
@@ -1083,14 +1090,14 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>See estimated intercept.</p>
-<div id="3807df6e" class="cell" data-execution_count="12">
+<div id="126c0f89" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pcr_model.intercept_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>np.float64(-5.822294013977115e-16)</code></pre>
 </div>
 </div>
 <p>Also, see estimated coefficient on each of two principal component scores.</p>
-<div id="0af06564" class="cell" data-execution_count="13">
+<div id="e7848ead" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pcr_model.coef_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>array([-2.9187982 ,  2.53920563])</code></pre>
@@ -1102,7 +1109,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <h2 data-number="4.3" class="anchored" data-anchor-id="examples-4.14---4.15"><span class="header-section-number">4.3</span> Examples 4.14 - 4.15</h2>
 <section id="load-data-2" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="load-data-2"><span class="header-section-number">4.3.1</span> Load data</h3>
-<div id="7f9e759f" class="cell" data-execution_count="14">
+<div id="457f55a1" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>dat3 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch4_dat3.csv"</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>dat3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
@@ -1170,7 +1177,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 </div>
-<div id="437edd58" class="cell" data-execution_count="15">
+<div id="79472257" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat3.drop(<span class="st">'y'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> dat3[<span class="st">'y'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1179,7 +1186,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <h3 data-number="4.3.2" class="anchored" data-anchor-id="partial-least-squares-regression"><span class="header-section-number">4.3.2</span> Partial least squares regression</h3>
 <p>Use <code>PLSRegression()</code> from <code>sklearn.cross_decomposition</code> module to define a partial least squares (PLS) regression model.</p>
 <p>In this example, pass <code>n_components=2</code> argument to use two latent variables. In addition, set <code>scale=False</code> to override default argument <code>scale=True</code>. Typically use the default argument that standardize inputs and outputs, but we will not do the standardization in this example.</p>
-<div id="a89d6801" class="cell" data-execution_count="16">
+<div id="05f4fa4e" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pls_model <span class="op">=</span> PLSRegression(n_components<span class="op">=</span><span class="dv">2</span>, scale<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>pls_model.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
@@ -1591,7 +1598,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>See latent variable matrix.</p>
-<div id="bf19c022" class="cell" data-execution_count="17">
+<div id="d42dadd3" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pls_model.x_scores_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>array([[  6.3186736 ,  -2.01669993],
@@ -1603,7 +1610,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>X-loading matrix.</p>
-<div id="da62cdd8" class="cell" data-execution_count="18">
+<div id="4bf53474" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pls_model.x_loadings_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>array([[-0.25399471,  0.54816492],
@@ -1612,7 +1619,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>Weight matrix for X.</p>
-<div id="96aa2188" class="cell" data-execution_count="19">
+<div id="828503a9" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pls_model.x_weights_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>array([[-0.28152506,  0.65106763],
@@ -1621,14 +1628,14 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>y-loading</p>
-<div id="1e87c5d6" class="cell" data-execution_count="20">
+<div id="63524b56" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pls_model.y_loadings_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <pre><code>array([[-2.9271831 ,  2.49078301]])</code></pre>
 </div>
 </div>
 <p>Intecept and coefficients on original input variables.</p>
-<div id="9b8fb99b" class="cell" data-execution_count="21">
+<div id="bcad0fc3" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Intercept"</span>)</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pls_model.intercept_)</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1645,7 +1652,7 @@ Coefficients
 <section id="prediction" class="level3" data-number="4.3.3">
 <h3 data-number="4.3.3" class="anchored" data-anchor-id="prediction"><span class="header-section-number">4.3.3</span> Prediction</h3>
 <p>Make a prediction by calling <code>predict()</code> method.</p>
-<div id="c3e07c90" class="cell" data-execution_count="22">
+<div id="09f2462b" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>dat3.assign(</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    pred_y <span class="op">=</span> pls_model.predict(X)</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2143,6 +2150,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./ch05_classification.html" class="pagination-link" aria-label="Classification">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Classification</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
