@@ -10,6 +10,7 @@ book:
     - ch02_regression.qmd
     - ch03_regularized_regression.qmd
     - ch04_dimension_reduction.qmd
+    - ch05_classification.qmd
   repo-url: https://github.com/youngroklee-ml/data-mining-python
 
 format:
