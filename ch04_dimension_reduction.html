@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Youngrok Lee">
-<meta name="dcterms.date" content="2024-06-30">
 
-<title>Data Mining with Python</title>
+<title>Data Mining with Python - 4&nbsp; Dimension reduction</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,17 +20,51 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ch02_regression.html" rel="next">
+<link href="./ch03_regularized_regression.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,6 +101,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -82,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch04_dimension_reduction.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dimension reduction</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -112,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
   </div>
 </li>
@@ -130,7 +165,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch04_dimension_reduction.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch04_dimension_reduction.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dimension reduction</span></span></a>
   </div>
 </li>
@@ -144,7 +179,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface"><span class="header-section-number">1</span> Preface</a></li>
+  <li><a href="#example-4.10" id="toc-example-4.10" class="nav-link active" data-scroll-target="#example-4.10"><span class="header-section-number">4.1</span> Example 4.10</a>
+  <ul class="collapse">
+  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data"><span class="header-section-number">4.1.1</span> Load data</a></li>
+  <li><a href="#principal-component-analysis-with-statsmodels" id="toc-principal-component-analysis-with-statsmodels" class="nav-link" data-scroll-target="#principal-component-analysis-with-statsmodels"><span class="header-section-number">4.1.2</span> Principal component analysis with <code>statsmodels</code></a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -153,26 +192,14 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Data Mining with Python</h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dimension reduction</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Youngrok Lee </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">June 30, 2024</p>
-    </div>
-  </div>
   
     
   </div>
@@ -182,11 +209,356 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Preface</h1>
-<p>This is a book to convert example code on <a href="https://youngroklee-ml.github.io/data-mining-techniques/">https://youngroklee-ml.github.io/data-mining-techniques/</a> into Python.</p>
+<div id="0a6aa054" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="example-4.10" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="example-4.10"><span class="header-section-number">4.1</span> Example 4.10</h2>
+<section id="load-data" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">4.1.1</span> Load data</h3>
+<div id="dc360135" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat2 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch4_dat2.csv"</span>, encoding<span class="op">=</span><span class="st">"euc-kr"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dat2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+<div>
 
 
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ID</th>
+<th data-quarto-table-cell-role="th">X1</th>
+<th data-quarto-table-cell-role="th">X2</th>
+<th data-quarto-table-cell-role="th">X3</th>
+<th data-quarto-table-cell-role="th">X4</th>
+<th data-quarto-table-cell-role="th">X5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>SK증권</td>
+<td>2.43</td>
+<td>11.10</td>
+<td>18.46</td>
+<td>441.67</td>
+<td>0.90</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>교보증권</td>
+<td>3.09</td>
+<td>9.95</td>
+<td>29.46</td>
+<td>239.43</td>
+<td>0.90</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>대신증권</td>
+<td>2.22</td>
+<td>6.86</td>
+<td>28.62</td>
+<td>249.36</td>
+<td>0.69</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>대우증권</td>
+<td>5.76</td>
+<td>23.19</td>
+<td>23.47</td>
+<td>326.09</td>
+<td>1.43</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>동부증권</td>
+<td>1.60</td>
+<td>5.64</td>
+<td>25.64</td>
+<td>289.98</td>
+<td>1.42</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>메리츠증권</td>
+<td>3.53</td>
+<td>10.64</td>
+<td>32.25</td>
+<td>210.10</td>
+<td>1.17</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>미래에셋증권</td>
+<td>4.26</td>
+<td>15.56</td>
+<td>24.40</td>
+<td>309.78</td>
+<td>0.81</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>부국증권</td>
+<td>3.86</td>
+<td>5.50</td>
+<td>70.74</td>
+<td>41.36</td>
+<td>0.81</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>브릿지증권</td>
+<td>4.09</td>
+<td>6.44</td>
+<td>64.38</td>
+<td>55.32</td>
+<td>0.32</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>삼성증권</td>
+<td>2.73</td>
+<td>10.68</td>
+<td>24.41</td>
+<td>309.59</td>
+<td>0.64</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>서울증권</td>
+<td>2.03</td>
+<td>4.50</td>
+<td>42.53</td>
+<td>135.12</td>
+<td>0.59</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>신영증권</td>
+<td>1.96</td>
+<td>8.92</td>
+<td>18.48</td>
+<td>441.19</td>
+<td>1.07</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>신흥증권</td>
+<td>3.25</td>
+<td>7.96</td>
+<td>40.42</td>
+<td>147.41</td>
+<td>1.19</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>우리투자증권</td>
+<td>2.01</td>
+<td>10.28</td>
+<td>17.46</td>
+<td>472.78</td>
+<td>1.25</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>유화증권</td>
+<td>2.28</td>
+<td>3.65</td>
+<td>63.71</td>
+<td>56.96</td>
+<td>0.12</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>한양증권</td>
+<td>4.51</td>
+<td>7.50</td>
+<td>63.52</td>
+<td>57.44</td>
+<td>0.80</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>한화증권</td>
+<td>3.29</td>
+<td>12.37</td>
+<td>24.47</td>
+<td>308.63</td>
+<td>0.57</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>현대증권</td>
+<td>1.73</td>
+<td>7.57</td>
+<td>19.59</td>
+<td>410.45</td>
+<td>1.19</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="principal-component-analysis-with-statsmodels" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="principal-component-analysis-with-statsmodels"><span class="header-section-number">4.1.2</span> Principal component analysis with <code>statsmodels</code></h3>
+<p>Train a PCA model.</p>
+<div id="71167c31" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pca_model <span class="op">=</span> sm.PCA(dat2.drop(<span class="st">"ID"</span>, axis<span class="op">=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Print a loading matrix.</p>
+<div id="59dc7024" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pca_model.loadings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">comp_0</th>
+<th data-quarto-table-cell-role="th">comp_1</th>
+<th data-quarto-table-cell-role="th">comp_2</th>
+<th data-quarto-table-cell-role="th">comp_3</th>
+<th data-quarto-table-cell-role="th">comp_4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">X1</td>
+<td>0.076084</td>
+<td>0.779670</td>
+<td>0.000892</td>
+<td>0.140755</td>
+<td>0.605403</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">X2</td>
+<td>-0.394630</td>
+<td>0.565412</td>
+<td>-0.295322</td>
+<td>-0.117644</td>
+<td>-0.650785</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">X3</td>
+<td>0.569702</td>
+<td>0.162282</td>
+<td>0.241222</td>
+<td>0.637722</td>
+<td>-0.429217</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">X4</td>
+<td>-0.559828</td>
+<td>-0.196543</td>
+<td>-0.256597</td>
+<td>0.748094</td>
+<td>0.149922</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">X5</td>
+<td>-0.447785</td>
+<td>0.086368</td>
+<td>0.888118</td>
+<td>0.003668</td>
+<td>-0.057115</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+<p>Draw a scree plot.</p>
+<div id="3e551566" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> pca_model.plot_scree(log_scale<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ch04_dimension_reduction_files/figure-html/cell-6-output-1.png" width="662" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The x-axis represents number of principal component - 1. 0 in the x-axis represents the 1st principal component.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The y-axis values are different from the book example, because <code>statsmodels</code> returns eigenvalues multiplied by the number of observations.</p>
+<div id="86167a90" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Eigenvalue from statsmodels:"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pca_model.eigenvals)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Eigenvalue in the book example:"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pca_model.eigenvals <span class="op">/</span> <span class="bu">len</span>(dat2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Eigenvalue from statsmodels:
+0    49.706320
+1    28.901757
+2     9.910135
+3     1.153137
+4     0.328651
+Name: eigenvals, dtype: float64
+Eigenvalue in the book example:
+0    2.761462
+1    1.605653
+2    0.550563
+3    0.064063
+4    0.018258
+Name: eigenvals, dtype: float64</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>Contribution</p>
+<div id="be794c8f" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pca_model.rsquare</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>ncomp
+0    0.000000
+1    0.552292
+2    0.873423
+3    0.983536
+4    0.996348
+5    1.000000
+Name: rsquare, dtype: float64</code></pre>
+</div>
+</div>
+
+
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -601,11 +973,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./ch03_regularized_regression.html" class="pagination-link" aria-label="Regularized regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Regularized regression</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ch02_regression.html" class="pagination-link" aria-label="Regression">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Regression</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
