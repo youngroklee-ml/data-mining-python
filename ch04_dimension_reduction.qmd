@@ -1,0 +1,60 @@
+# Dimension reduction
+
+```{python}
+import pandas as pd
+import numpy as np
+import statsmodels.api as sm
+```
+
+## Example 4.10
+
+### Load data
+
+```{python}
+dat2 = pd.read_csv("data/ch4_dat2.csv", encoding="euc-kr")
+dat2
+```
+
+### Principal component analysis with `statsmodels`
+
+Train a PCA model.
+
+```{python}
+pca_model = sm.PCA(dat2.drop("ID", axis=1))
+```
+
+Print a loading matrix.
+
+```{python}
+pca_model.loadings
+```
+
+Draw a scree plot.
+
+```{python}
+fig = pca_model.plot_scree(log_scale=False)
+```
+
+:::{.callout-note}
+The x-axis represents number of principal component - 1. 0 in the x-axis represents the 1st principal component.
+:::
+
+:::{.callout-note}
+The y-axis values are different from the book example, because `statsmodels` returns eigenvalues multiplied by the number of observations.
+
+```{python}
+print("Eigenvalue from statsmodels:")
+print(pca_model.eigenvals)
+
+print("Eigenvalue in the book example:")
+print(pca_model.eigenvals / len(dat2))
+```
+:::
+
+
+Contribution
+
+```{python}
+pca_model.rsquare
+```
+

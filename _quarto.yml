@@ -9,6 +9,8 @@ book:
     - index.qmd
     - ch02_regression.qmd
     - ch03_regularized_regression.qmd
+    - ch04_dimension_reduction.qmd
+  repo-url: https://github.com/youngroklee-ml/data-mining-python
 
 format:
   html:
