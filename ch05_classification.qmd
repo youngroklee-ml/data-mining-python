@@ -4,8 +4,10 @@
 import pandas as pd
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.preprocessing import LabelBinarizer
+from sklearn.naive_bayes import BernoulliNB, CategoricalNB
+from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, roc_auc_score, roc_curve, auc, RocCurveDisplay, confusion_matrix
 ```
 
 ## Example 5.2
@@ -68,4 +70,125 @@ pd.DataFrame(X_test).assign(
     observed_class = y_test,
     pred_class = knn_model.predict(X_test)
 )
+```
+
+
+## Examples 5.3 - 5.4
+
+### Load data
+
+```{python}
+dat3 = pd.read_csv("data/ch5_dat3.csv")
+dat3
+```
+
+### Preprocess data
+
+Encode categorical values to integer variable by using `factorize()` method from `pandas` module.
+
+```{python}
+X = dat3[['gender', 'age_gr']].copy()
+X.gender, _ = pd.factorize(X.gender)
+X.age_gr, _ = pd.factorize(X.age_gr)
+```
+
+
+### Ex 5.3: Naive Bayes classifier
+
+#### Estimation
+
+Use `CategoricalNB()` to define a naive Bayes classifier. Pass `alpha=0` argument to do not apply smoothing.
+
+```{python}
+nb_model = CategoricalNB(alpha=0)
+nb_model.fit(X, dat3['class'])
+```
+
+
+#### Posterior
+
+Call `predict_proba()` method to predict posterior probability of belonging to each class.
+
+```{python}
+nb_model.predict_proba(X)
+```
+
+#### Classification
+
+Call `predict()` method to make classification.
+
+```{python}
+nb_model.predict(X)
+```
+
+
+### Ex 5.4: Evaluation metrics
+
+```{python}
+y = dat3['class']
+y_pred = nb_model.predict(X)
+```
+
+#### Confusion matrix
+
+```{python}
+confusion_matrix(y, y_pred)
+```
+
+#### Accuracy
+
+```{python}
+accuracy_score(y, y_pred)
+```
+
+
+#### Sensitivity (Recall)
+
+Sensitivity is the same to precision. Use `precision_score()` in `sklearn.metrics` module. Set class `1` to be a positive event in this example by passing `pos_label=1` argument.
+
+```{python}
+precision_score(y, y_pred, pos_label=1)
+```
+
+#### Specificity
+
+Specificity is the same to sensitivity with different event level, by passing `pos_label=2` argument.
+
+```{python}
+precision_score(y, y_pred, pos_label=2)
+```
+
+#### F1-score
+
+F1 score is a harmonic mean of precision and recall.
+
+You can either indirectly compute by using precision and recall
+
+```{python}
+precision = precision_score(y, y_pred)
+recall = recall_score(y, y_pred)
+2 * precision * recall / (precision + recall)
+```
+
+or directly compute by using `f1_score` function.
+
+```{python}
+f1_score(y, y_pred)
+```
+
+#### ROC curve and AUC
+
+Computing a ROC curve requires posterior probability.
+
+```{python}
+prob = nb_model.predict_proba(X)[:, 0]
+```
+
+Visualize ROC curve.
+
+```{python}
+fpr, tpr, thresholds = roc_curve(y, y_score = prob, pos_label=1)
+roc_auc = auc(fpr, tpr)
+display = RocCurveDisplay(fpr=fpr, tpr=tpr, roc_auc=roc_auc, pos_label=1)
+display.plot()
 ```
