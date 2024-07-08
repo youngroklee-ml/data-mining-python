@@ -7,11 +7,6 @@ import statsmodels.formula.api as smf
 from statsmodels.miscmodels.ordinal_model import OrderedModel
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelBinarizer, LabelEncoder, OrdinalEncoder
-from sklearn.metrics import (
-    accuracy_score, f1_score, precision_score, 
-    recall_score, roc_auc_score, roc_curve, auc, 
-    RocCurveDisplay, confusion_matrix
-)
 ```
 
 ## Examples 6.1, 6.3
