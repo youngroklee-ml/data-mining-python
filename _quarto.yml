@@ -13,6 +13,7 @@ book:
     - ch05_classification.qmd
     - ch06_logistic_regression.qmd
     - ch07_da.qmd
+    - ch08_tree.qmd
   repo-url: https://github.com/youngroklee-ml/data-mining-python
 
 format:
