@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Mining with Python - 4&nbsp; Dimension reduction</title>
+<title>Data Mining with Python - 9&nbsp; Support vector machine</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ch05_classification.html" rel="next">
-<link href="./ch03_regularized_regression.html" rel="prev">
+<link href="./ch08_tree.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -118,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch04_dimension_reduction.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dimension reduction</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch09_svm.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Support vector machine</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -166,7 +165,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch04_dimension_reduction.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ch04_dimension_reduction.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dimension reduction</span></span></a>
   </div>
 </li>
@@ -196,7 +195,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch09_svm.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch09_svm.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Support vector machine</span></span></a>
   </div>
 </li>
@@ -210,22 +209,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#example-4.10" id="toc-example-4.10" class="nav-link active" data-scroll-target="#example-4.10"><span class="header-section-number">4.1</span> Example 4.10</a>
+  <li><a href="#example-9.1" id="toc-example-9.1" class="nav-link active" data-scroll-target="#example-9.1"><span class="header-section-number">9.1</span> Example 9.1</a>
   <ul class="collapse">
-  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data"><span class="header-section-number">4.1.1</span> Load data</a></li>
-  <li><a href="#principal-component-analysis-with-statsmodels" id="toc-principal-component-analysis-with-statsmodels" class="nav-link" data-scroll-target="#principal-component-analysis-with-statsmodels"><span class="header-section-number">4.1.2</span> Principal component analysis with <code>statsmodels</code></a></li>
+  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data"><span class="header-section-number">9.1.1</span> Load data</a></li>
+  <li><a href="#linear-svm-separable" id="toc-linear-svm-separable" class="nav-link" data-scroll-target="#linear-svm-separable"><span class="header-section-number">9.1.2</span> Linear SVM: Separable</a></li>
   </ul></li>
-  <li><a href="#example-4.12" id="toc-example-4.12" class="nav-link" data-scroll-target="#example-4.12"><span class="header-section-number">4.2</span> Example 4.12</a>
+  <li><a href="#example-9.2" id="toc-example-9.2" class="nav-link" data-scroll-target="#example-9.2"><span class="header-section-number">9.2</span> Example 9.2</a>
   <ul class="collapse">
-  <li><a href="#load-data-1" id="toc-load-data-1" class="nav-link" data-scroll-target="#load-data-1"><span class="header-section-number">4.2.1</span> Load data</a></li>
-  <li><a href="#principal-component-analysis-with-scikit-learn" id="toc-principal-component-analysis-with-scikit-learn" class="nav-link" data-scroll-target="#principal-component-analysis-with-scikit-learn"><span class="header-section-number">4.2.2</span> Principal component analysis with <code>scikit-learn</code></a></li>
-  <li><a href="#linear-regression-with-first-two-principal-components" id="toc-linear-regression-with-first-two-principal-components" class="nav-link" data-scroll-target="#linear-regression-with-first-two-principal-components"><span class="header-section-number">4.2.3</span> Linear regression with first two principal components</a></li>
+  <li><a href="#load-data-1" id="toc-load-data-1" class="nav-link" data-scroll-target="#load-data-1"><span class="header-section-number">9.2.1</span> Load data</a></li>
+  <li><a href="#linear-svm-inseparable" id="toc-linear-svm-inseparable" class="nav-link" data-scroll-target="#linear-svm-inseparable"><span class="header-section-number">9.2.2</span> Linear SVM: Inseparable</a></li>
   </ul></li>
-  <li><a href="#examples-4.14---4.15" id="toc-examples-4.14---4.15" class="nav-link" data-scroll-target="#examples-4.14---4.15"><span class="header-section-number">4.3</span> Examples 4.14 - 4.15</a>
+  <li><a href="#example-9.7" id="toc-example-9.7" class="nav-link" data-scroll-target="#example-9.7"><span class="header-section-number">9.3</span> Example 9.7</a>
   <ul class="collapse">
-  <li><a href="#load-data-2" id="toc-load-data-2" class="nav-link" data-scroll-target="#load-data-2"><span class="header-section-number">4.3.1</span> Load data</a></li>
-  <li><a href="#partial-least-squares-regression" id="toc-partial-least-squares-regression" class="nav-link" data-scroll-target="#partial-least-squares-regression"><span class="header-section-number">4.3.2</span> Partial least squares regression</a></li>
-  <li><a href="#prediction" id="toc-prediction" class="nav-link" data-scroll-target="#prediction"><span class="header-section-number">4.3.3</span> Prediction</a></li>
+  <li><a href="#load-data-2" id="toc-load-data-2" class="nav-link" data-scroll-target="#load-data-2"><span class="header-section-number">9.3.1</span> Load data</a></li>
+  <li><a href="#nonlinear-svm-polynomial" id="toc-nonlinear-svm-polynomial" class="nav-link" data-scroll-target="#nonlinear-svm-polynomial"><span class="header-section-number">9.3.2</span> Nonlinear SVM: Polynomial</a></li>
+  </ul></li>
+  <li><a href="#example-9.8" id="toc-example-9.8" class="nav-link" data-scroll-target="#example-9.8"><span class="header-section-number">9.4</span> Example 9.8</a>
+  <ul class="collapse">
+  <li><a href="#load-data-3" id="toc-load-data-3" class="nav-link" data-scroll-target="#load-data-3"><span class="header-section-number">9.4.1</span> Load data</a></li>
+  <li><a href="#traintest-split" id="toc-traintest-split" class="nav-link" data-scroll-target="#traintest-split"><span class="header-section-number">9.4.2</span> Train/test split</a></li>
+  <li><a href="#nonlinear-svm-rbf-kernel-with-narrow-width" id="toc-nonlinear-svm-rbf-kernel-with-narrow-width" class="nav-link" data-scroll-target="#nonlinear-svm-rbf-kernel-with-narrow-width"><span class="header-section-number">9.4.3</span> Nonlinear SVM: RBF Kernel with narrow width</a></li>
+  <li><a href="#nonlinear-svm-rbf-kernel-with-wide-width" id="toc-nonlinear-svm-rbf-kernel-with-wide-width" class="nav-link" data-scroll-target="#nonlinear-svm-rbf-kernel-with-wide-width"><span class="header-section-number">9.4.4</span> Nonlinear SVM: RBF Kernel with wide width</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -235,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Dimension reduction</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Support vector machine</span></h1>
 </div>
 
 
@@ -252,460 +256,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="783338c2" class="cell" data-execution_count="1">
+<div id="4ba09f56" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cross_decomposition <span class="im">import</span> PLSRegression</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelBinarizer</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, confusion_matrix</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="example-4.10" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="example-4.10"><span class="header-section-number">4.1</span> Example 4.10</h2>
-<section id="load-data" class="level3" data-number="4.1.1">
-<h3 data-number="4.1.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">4.1.1</span> Load data</h3>
-<div id="b999a9fc" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat2 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch4_dat2.csv"</span>, encoding<span class="op">=</span><span class="st">"euc-kr"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dat2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<div>
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">ID</th>
-<th data-quarto-table-cell-role="th">X1</th>
-<th data-quarto-table-cell-role="th">X2</th>
-<th data-quarto-table-cell-role="th">X3</th>
-<th data-quarto-table-cell-role="th">X4</th>
-<th data-quarto-table-cell-role="th">X5</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>SK증권</td>
-<td>2.43</td>
-<td>11.10</td>
-<td>18.46</td>
-<td>441.67</td>
-<td>0.90</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>교보증권</td>
-<td>3.09</td>
-<td>9.95</td>
-<td>29.46</td>
-<td>239.43</td>
-<td>0.90</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>대신증권</td>
-<td>2.22</td>
-<td>6.86</td>
-<td>28.62</td>
-<td>249.36</td>
-<td>0.69</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>대우증권</td>
-<td>5.76</td>
-<td>23.19</td>
-<td>23.47</td>
-<td>326.09</td>
-<td>1.43</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>동부증권</td>
-<td>1.60</td>
-<td>5.64</td>
-<td>25.64</td>
-<td>289.98</td>
-<td>1.42</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>메리츠증권</td>
-<td>3.53</td>
-<td>10.64</td>
-<td>32.25</td>
-<td>210.10</td>
-<td>1.17</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
-<td>미래에셋증권</td>
-<td>4.26</td>
-<td>15.56</td>
-<td>24.40</td>
-<td>309.78</td>
-<td>0.81</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
-<td>부국증권</td>
-<td>3.86</td>
-<td>5.50</td>
-<td>70.74</td>
-<td>41.36</td>
-<td>0.81</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
-<td>브릿지증권</td>
-<td>4.09</td>
-<td>6.44</td>
-<td>64.38</td>
-<td>55.32</td>
-<td>0.32</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
-<td>삼성증권</td>
-<td>2.73</td>
-<td>10.68</td>
-<td>24.41</td>
-<td>309.59</td>
-<td>0.64</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">10</td>
-<td>서울증권</td>
-<td>2.03</td>
-<td>4.50</td>
-<td>42.53</td>
-<td>135.12</td>
-<td>0.59</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">11</td>
-<td>신영증권</td>
-<td>1.96</td>
-<td>8.92</td>
-<td>18.48</td>
-<td>441.19</td>
-<td>1.07</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>신흥증권</td>
-<td>3.25</td>
-<td>7.96</td>
-<td>40.42</td>
-<td>147.41</td>
-<td>1.19</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">13</td>
-<td>우리투자증권</td>
-<td>2.01</td>
-<td>10.28</td>
-<td>17.46</td>
-<td>472.78</td>
-<td>1.25</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">14</td>
-<td>유화증권</td>
-<td>2.28</td>
-<td>3.65</td>
-<td>63.71</td>
-<td>56.96</td>
-<td>0.12</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">15</td>
-<td>한양증권</td>
-<td>4.51</td>
-<td>7.50</td>
-<td>63.52</td>
-<td>57.44</td>
-<td>0.80</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">16</td>
-<td>한화증권</td>
-<td>3.29</td>
-<td>12.37</td>
-<td>24.47</td>
-<td>308.63</td>
-<td>0.57</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">17</td>
-<td>현대증권</td>
-<td>1.73</td>
-<td>7.57</td>
-<td>19.59</td>
-<td>410.45</td>
-<td>1.19</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
+<section id="example-9.1" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="example-9.1"><span class="header-section-number">9.1</span> Example 9.1</h2>
+<section id="load-data" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">9.1.1</span> Load data</h3>
+<div id="273ade41" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> pd.read_csv(<span class="st">"data/ch9_dat1.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat[[<span class="st">'x1'</span>, <span class="st">'x2'</span>]]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> LabelBinarizer(neg_label<span class="op">=-</span><span class="dv">1</span>, pos_label<span class="op">=</span><span class="dv">1</span>).fit_transform(dat[<span class="st">'class'</span>]).ravel()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="principal-component-analysis-with-statsmodels" class="level3" data-number="4.1.2">
-<h3 data-number="4.1.2" class="anchored" data-anchor-id="principal-component-analysis-with-statsmodels"><span class="header-section-number">4.1.2</span> Principal component analysis with <code>statsmodels</code></h3>
-<p>Train a PCA model.</p>
-<div id="d6a5cd5c" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pca_model <span class="op">=</span> sm.PCA(dat2.drop(<span class="st">"ID"</span>, axis<span class="op">=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Print a loading matrix.</p>
-<div id="6e471349" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pca_model.loadings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<div>
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">comp_0</th>
-<th data-quarto-table-cell-role="th">comp_1</th>
-<th data-quarto-table-cell-role="th">comp_2</th>
-<th data-quarto-table-cell-role="th">comp_3</th>
-<th data-quarto-table-cell-role="th">comp_4</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">X1</td>
-<td>0.076084</td>
-<td>0.779670</td>
-<td>0.000892</td>
-<td>0.140755</td>
-<td>0.605403</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">X2</td>
-<td>-0.394630</td>
-<td>0.565412</td>
-<td>-0.295322</td>
-<td>-0.117644</td>
-<td>-0.650785</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">X3</td>
-<td>0.569702</td>
-<td>0.162282</td>
-<td>0.241222</td>
-<td>0.637722</td>
-<td>-0.429217</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">X4</td>
-<td>-0.559828</td>
-<td>-0.196543</td>
-<td>-0.256597</td>
-<td>0.748094</td>
-<td>0.149922</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">X5</td>
-<td>-0.447785</td>
-<td>0.086368</td>
-<td>0.888118</td>
-<td>0.003668</td>
-<td>-0.057115</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-</div>
-<p>Draw a scree plot.</p>
-<div id="d91b4f01" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> pca_model.plot_scree(log_scale<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="ch04_dimension_reduction_files/figure-html/cell-6-output-1.png" width="662" height="470" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The x-axis represents number of principal component - 1. 0 in the x-axis represents the 1st principal component.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The y-axis values are different from the book example, because <code>statsmodels</code> returns eigenvalues multiplied by the number of observations.</p>
-<div id="5d2d198d" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Eigenvalue from statsmodels:"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pca_model.eigenvals)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Eigenvalue in the book example:"</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pca_model.eigenvals <span class="op">/</span> <span class="bu">len</span>(dat2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Eigenvalue from statsmodels:
-0    49.706320
-1    28.901757
-2     9.910135
-3     1.153137
-4     0.328651
-Name: eigenvals, dtype: float64
-Eigenvalue in the book example:
-0    2.761462
-1    1.605653
-2    0.550563
-3    0.064063
-4    0.018258
-Name: eigenvals, dtype: float64</code></pre>
-</div>
-</div>
-</div>
-</div>
-<p>Contribution</p>
-<div id="e6282a70" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pca_model.rsquare</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>ncomp
-0    0.000000
-1    0.552292
-2    0.873423
-3    0.983536
-4    0.996348
-5    1.000000
-Name: rsquare, dtype: float64</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="example-4.12" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="example-4.12"><span class="header-section-number">4.2</span> Example 4.12</h2>
-<section id="load-data-1" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="load-data-1"><span class="header-section-number">4.2.1</span> Load data</h3>
-<div id="02fc523c" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dat3 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch4_dat3.csv"</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>dat3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
-<div>
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">x1</th>
-<th data-quarto-table-cell-role="th">x2</th>
-<th data-quarto-table-cell-role="th">x3</th>
-<th data-quarto-table-cell-role="th">y</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>-3</td>
-<td>-3</td>
-<td>5</td>
-<td>-30</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>-2</td>
-<td>-3</td>
-<td>7</td>
-<td>-20</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>0</td>
-<td>0</td>
-<td>4</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>1</td>
-<td>2</td>
-<td>0</td>
-<td>5</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>2</td>
-<td>2</td>
-<td>-5</td>
-<td>10</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>2</td>
-<td>2</td>
-<td>-11</td>
-<td>35</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-</div>
-<div id="8caa1a9a" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat3.drop(<span class="st">'y'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> dat3[<span class="st">'y'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="principal-component-analysis-with-scikit-learn" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="principal-component-analysis-with-scikit-learn"><span class="header-section-number">4.2.2</span> Principal component analysis with <code>scikit-learn</code></h3>
-<p>Use <code>PCA()</code> from <code>skearn.decomposition</code> to define a principal component analysis model. Pass <code>n_components=2</code> argument to find up to two components.</p>
-<p>Extract principal component scores for training data by calling <code>fit_transform()</code> method. The results will be used as input to a linear regression model.</p>
-<div id="469b9878" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pca_model <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>pc <span class="op">=</span> pca_model.fit_transform(X)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>pc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>array([[  6.23469918,  -1.98801689],
-       [  7.8320036 ,  -0.68170263],
-       [  3.69967748,   1.51516424],
-       [ -0.82086723,   2.03924933],
-       [ -5.69799841,   0.69402616],
-       [-11.24751463,  -1.57872021]])</code></pre>
-</div>
-</div>
-</section>
-<section id="linear-regression-with-first-two-principal-components" class="level3" data-number="4.2.3">
-<h3 data-number="4.2.3" class="anchored" data-anchor-id="linear-regression-with-first-two-principal-components"><span class="header-section-number">4.2.3</span> Linear regression with first two principal components</h3>
-<p>Use <code>LinearRegression()</code> from <code>sklearn.linear_model</code> to define a linear regression model. Use principal component scores as input matrix.</p>
-<div id="b824dd64" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pcr_model <span class="op">=</span> LinearRegression()</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>pcr_model.fit(pc, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<section id="linear-svm-separable" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="linear-svm-separable"><span class="header-section-number">9.1.2</span> Linear SVM: Separable</h3>
+<div id="c94af758" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>svm_model <span class="op">=</span> SVC(kernel<span class="op">=</span><span class="st">'linear'</span>, C<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>svm_model.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
 <style>#sk-container-id-1 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: black;
@@ -1110,110 +684,103 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
 }
-</a></style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LinearRegression()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked=""><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;LinearRegression<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.linear_model.LinearRegression.html">?<span>Documentation for LinearRegression</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>LinearRegression()</pre></div> </div></div></div></div>
+</a></style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>SVC(C=100, kernel='linear')</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked=""><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;SVC<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.svm.SVC.html">?<span>Documentation for SVC</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>SVC(C=100, kernel='linear')</pre></div> </div></div></div></div>
 </div>
 </div>
-<p>See estimated intercept.</p>
-<div id="c931c349" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pcr_model.intercept_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Hyperplane intercept:</p>
+<div id="80dcd054" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>svm_model.intercept_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>array([-6.9995])</code></pre>
+</div>
+</div>
+<p>Hyperplane coefficients:</p>
+<div id="de08a10c" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>svm_model.coef_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>array([[0.6664, 0.6668]])</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="example-9.2" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="example-9.2"><span class="header-section-number">9.2</span> Example 9.2</h2>
+<section id="load-data-1" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="load-data-1"><span class="header-section-number">9.2.1</span> Load data</h3>
+<div id="56dc8f4c" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> pd.read_csv(<span class="st">"data/ch9_dat2.csv"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat[[<span class="st">'x1'</span>, <span class="st">'x2'</span>]]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> LabelBinarizer(neg_label<span class="op">=-</span><span class="dv">1</span>, pos_label<span class="op">=</span><span class="dv">1</span>).fit_transform(dat[<span class="st">'class'</span>]).ravel()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="linear-svm-inseparable" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="linear-svm-inseparable"><span class="header-section-number">9.2.2</span> Linear SVM: Inseparable</h3>
+<div id="7513df90" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Cs <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">100</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>svm_models <span class="op">=</span> [SVC(C<span class="op">=</span>c, kernel<span class="op">=</span><span class="st">'linear'</span>) <span class="cf">for</span> c <span class="kw">in</span> Cs]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>svm_models <span class="op">=</span> [m.fit(X, y) <span class="cf">for</span> m <span class="kw">in</span> svm_models]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(Cs)):</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f"C = </span><span class="sc">{</span>Cs[i]<span class="sc">}</span><span class="ss">, Intercept = </span><span class="sc">{</span>svm_models[i]<span class="sc">.</span>intercept_<span class="sc">}</span><span class="ss">, Coefficients = </span><span class="sc">{</span>svm_models[i]<span class="sc">.</span>coef_<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>C = 1, Intercept = [-7.6], Coefficients = [[0.6 0.8]]
+C = 5, Intercept = [-9.39685301], Coefficients = [[0.39987067 1.19961201]]
+C = 100, Intercept = [-9.3975255], Coefficients = [[0.39989831 1.19969492]]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="example-9.7" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="example-9.7"><span class="header-section-number">9.3</span> Example 9.7</h2>
+<section id="load-data-2" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="load-data-2"><span class="header-section-number">9.3.1</span> Load data</h3>
+<div id="9c058873" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> pd.read_csv(<span class="st">"data/ch9_dat3.csv"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat[[<span class="st">'x1'</span>, <span class="st">'x2'</span>]]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> LabelBinarizer(neg_label<span class="op">=-</span><span class="dv">1</span>, pos_label<span class="op">=</span><span class="dv">1</span>).fit_transform(dat[<span class="st">'class'</span>]).ravel()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="nonlinear-svm-polynomial" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="nonlinear-svm-polynomial"><span class="header-section-number">9.3.2</span> Nonlinear SVM: Polynomial</h3>
+<p>See <a href="https://scikit-learn.org/stable/modules/svm.html#svm-kernels">kernel function parameterization</a></p>
+<div id="dd537f9f" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Cs <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">100</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>svm_models <span class="op">=</span> [SVC(C<span class="op">=</span>c, kernel<span class="op">=</span><span class="st">'poly'</span>, degree<span class="op">=</span><span class="dv">2</span>, gamma<span class="op">=</span><span class="dv">1</span>) <span class="cf">for</span> c <span class="kw">in</span> Cs]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>svm_models <span class="op">=</span> [m.fit(X, y) <span class="cf">for</span> m <span class="kw">in</span> svm_models]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(Cs)):</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="ss">f"C = </span><span class="sc">{</span>Cs[i]<span class="sc">}</span><span class="ss">, SV = </span><span class="sc">{</span>svm_models[i]<span class="sc">.</span>support_<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>C = 1, SV = [1 2 0 6]
+C = 5, SV = [1 2 0 5 6]
+C = 100, SV = [1 2 0 5 6]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="example-9.8" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="example-9.8"><span class="header-section-number">9.4</span> Example 9.8</h2>
+<section id="load-data-3" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="load-data-3"><span class="header-section-number">9.4.1</span> Load data</h3>
+<div id="dd97b53d" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> pd.read_csv(<span class="st">"data/breast-cancer-wisconsin.csv"</span>).dropna()</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat.iloc[:, <span class="dv">1</span>:<span class="dv">10</span>]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> LabelBinarizer().fit_transform(dat[<span class="st">'class'</span>]).ravel()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="traintest-split" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="traintest-split"><span class="header-section-number">9.4.2</span> Train/test split</h3>
+<div id="2f59301b" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="dv">1</span><span class="op">/</span><span class="dv">3</span>, random_state<span class="op">=</span><span class="dv">42724</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="nonlinear-svm-rbf-kernel-with-narrow-width" class="level3" data-number="9.4.3">
+<h3 data-number="9.4.3" class="anchored" data-anchor-id="nonlinear-svm-rbf-kernel-with-narrow-width"><span class="header-section-number">9.4.3</span> Nonlinear SVM: RBF Kernel with narrow width</h3>
+<p>See <a href="https://scikit-learn.org/stable/modules/svm.html#svm-kernels">kernel function parameterization</a></p>
+<div id="52091ac8" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>svm_model <span class="op">=</span> SVC(kernel<span class="op">=</span><span class="st">'rbf'</span>, C<span class="op">=</span><span class="dv">10</span>, gamma<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>svm_model.fit(X_train, y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>np.float64(-5.822294013977115e-16)</code></pre>
-</div>
-</div>
-<p>Also, see estimated coefficient on each of two principal component scores.</p>
-<div id="5c4966c4" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pcr_model.coef_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
-<pre><code>array([-2.9187982 ,  2.53920563])</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="examples-4.14---4.15" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="examples-4.14---4.15"><span class="header-section-number">4.3</span> Examples 4.14 - 4.15</h2>
-<section id="load-data-2" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="load-data-2"><span class="header-section-number">4.3.1</span> Load data</h3>
-<div id="68d85101" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>dat3 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch4_dat3.csv"</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>dat3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
-<div>
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">x1</th>
-<th data-quarto-table-cell-role="th">x2</th>
-<th data-quarto-table-cell-role="th">x3</th>
-<th data-quarto-table-cell-role="th">y</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>-3</td>
-<td>-3</td>
-<td>5</td>
-<td>-30</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>-2</td>
-<td>-3</td>
-<td>7</td>
-<td>-20</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>0</td>
-<td>0</td>
-<td>4</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>1</td>
-<td>2</td>
-<td>0</td>
-<td>5</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>2</td>
-<td>2</td>
-<td>-5</td>
-<td>10</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>2</td>
-<td>2</td>
-<td>-11</td>
-<td>35</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-</div>
-<div id="b51a98a7" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat3.drop(<span class="st">'y'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> dat3[<span class="st">'y'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="partial-least-squares-regression" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="partial-least-squares-regression"><span class="header-section-number">4.3.2</span> Partial least squares regression</h3>
-<p>Use <code>PLSRegression()</code> from <code>sklearn.cross_decomposition</code> module to define a partial least squares (PLS) regression model.</p>
-<p>In this example, pass <code>n_components=2</code> argument to use two latent variables. In addition, set <code>scale=False</code> to override default argument <code>scale=True</code>. Typically use the default argument that standardize inputs and outputs, but we will not do the standardization in this example.</p>
-<div id="4c35a0dd" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pls_model <span class="op">=</span> PLSRegression(n_components<span class="op">=</span><span class="dv">2</span>, scale<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>pls_model.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="16">
 <style>#sk-container-id-2 {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: black;
@@ -1618,142 +1185,480 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
 }
-</a></style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>PLSRegression(scale=False)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked=""><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;PLSRegression<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.cross_decomposition.PLSRegression.html">?<span>Documentation for PLSRegression</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>PLSRegression(scale=False)</pre></div> </div></div></div></div>
+</a></style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>SVC(C=10, gamma=0.5)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked=""><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;SVC<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.svm.SVC.html">?<span>Documentation for SVC</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>SVC(C=10, gamma=0.5)</pre></div> </div></div></div></div>
 </div>
 </div>
-<p>See latent variable matrix.</p>
-<div id="ca95ed4e" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pls_model.x_scores_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="17">
-<pre><code>array([[  6.3186736 ,  -2.01669993],
-       [  7.85142115,  -0.59033902],
-       [  3.62854523,   1.52677802],
-       [ -0.90713631,   1.95380974],
-       [ -5.72434291,   0.70830911],
-       [-11.16716076,  -1.58185792]])</code></pre>
+<p>Number of support vectors</p>
+<div id="a34162a0" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>svm_model.n_support_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>array([117, 160], dtype=int32)</code></pre>
 </div>
 </div>
-<p>X-loading matrix.</p>
-<div id="d03218fc" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pls_model.x_loadings_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="18">
-<pre><code>array([[-0.25399471,  0.54816492],
-       [-0.28607343,  0.73567618],
-       [ 0.92489821,  0.42380159]])</code></pre>
-</div>
-</div>
-<p>Weight matrix for X.</p>
-<div id="36816eca" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pls_model.x_weights_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="19">
-<pre><code>array([[-0.28152506,  0.65106763],
-       [-0.31280562,  0.63219196],
-       [ 0.90713631,  0.4200527 ]])</code></pre>
-</div>
-</div>
-<p>y-loading</p>
-<div id="df3aab89" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pls_model.y_loadings_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="20">
-<pre><code>array([[-2.9271831 ,  2.49078301]])</code></pre>
-</div>
-</div>
-<p>Intecept and coefficients on original input variables.</p>
-<div id="d0a6071d" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Intercept"</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pls_model.intercept_)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Coefficients"</span>)</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pls_model.coef_)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Intercept
-[0.]
-Coefficients
-[[ 2.47539454  2.52323782 -1.70463588]]</code></pre>
+<section id="in-sample-prediction" class="level4" data-number="9.4.3.1">
+<h4 data-number="9.4.3.1" class="anchored" data-anchor-id="in-sample-prediction"><span class="header-section-number">9.4.3.1</span> In-sample prediction</h4>
+<div id="d2815467" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>confusion_matrix(y_train, svm_model.predict(X_train))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>array([[294,   0],
+       [  0, 161]])</code></pre>
 </div>
 </div>
 </section>
-<section id="prediction" class="level3" data-number="4.3.3">
-<h3 data-number="4.3.3" class="anchored" data-anchor-id="prediction"><span class="header-section-number">4.3.3</span> Prediction</h3>
-<p>Make a prediction by calling <code>predict()</code> method.</p>
-<div id="71a5a3fa" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>dat3.assign(</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    pred_y <span class="op">=</span> pls_model.predict(X)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="22">
-<div>
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">x1</th>
-<th data-quarto-table-cell-role="th">x2</th>
-<th data-quarto-table-cell-role="th">x3</th>
-<th data-quarto-table-cell-role="th">y</th>
-<th data-quarto-table-cell-role="th">pred_y</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>-3</td>
-<td>-3</td>
-<td>5</td>
-<td>-30</td>
-<td>-23.519076</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>-2</td>
-<td>-3</td>
-<td>7</td>
-<td>-20</td>
-<td>-24.452954</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>0</td>
-<td>0</td>
-<td>4</td>
-<td>0</td>
-<td>-6.818544</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>1</td>
-<td>2</td>
-<td>0</td>
-<td>5</td>
-<td>7.521870</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>2</td>
-<td>2</td>
-<td>-5</td>
-<td>10</td>
-<td>18.520444</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>2</td>
-<td>2</td>
-<td>-11</td>
-<td>35</td>
-<td>28.748259</td>
-</tr>
-</tbody>
-</table>
-
+<section id="out-of-sample-prediction" class="level4" data-number="9.4.3.2">
+<h4 data-number="9.4.3.2" class="anchored" data-anchor-id="out-of-sample-prediction"><span class="header-section-number">9.4.3.2</span> Out-of-sample prediction</h4>
+<div id="67dc4c12" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>confusion_matrix(y_test, svm_model.predict(X_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>array([[140,  10],
+       [  0,  78]])</code></pre>
 </div>
 </div>
+</section>
+</section>
+<section id="nonlinear-svm-rbf-kernel-with-wide-width" class="level3" data-number="9.4.4">
+<h3 data-number="9.4.4" class="anchored" data-anchor-id="nonlinear-svm-rbf-kernel-with-wide-width"><span class="header-section-number">9.4.4</span> Nonlinear SVM: RBF Kernel with wide width</h3>
+<p>See <a href="https://scikit-learn.org/stable/modules/svm.html#svm-kernels">kernel function parameterization</a></p>
+<div id="b15e3046" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>svm_model <span class="op">=</span> SVC(kernel<span class="op">=</span><span class="st">'rbf'</span>, C<span class="op">=</span><span class="dv">10</span>, gamma<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>svm_model.fit(X_train, y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<style>#sk-container-id-3 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: black;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-3 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-3 pre {
+  padding: 0;
+}
+
+#sk-container-id-3 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-3 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-3 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-3 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-3 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-3 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-3 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-3 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-3 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-3 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-3 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-3 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-3 label.sk-toggleable__label {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#sk-container-id-3 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-3 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-3 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-3 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-3 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-3 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-3 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-3 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-3 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-3 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-3 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-3 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-3 div.sk-label label.sk-toggleable__label,
+#sk-container-id-3 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-3 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-3 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-3 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-3 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-3 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-3 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-3 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-3 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 1ex;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-3 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-3 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-3 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-3 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</a></style><div id="sk-container-id-3" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>SVC(C=10, gamma=2)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" checked=""><label for="sk-estimator-id-3" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;SVC<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.svm.SVC.html">?<span>Documentation for SVC</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>SVC(C=10, gamma=2)</pre></div> </div></div></div></div>
+</div>
+</div>
+<p>Number of support vectors</p>
+<div id="421c796e" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>svm_model.n_support_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>array([165, 160], dtype=int32)</code></pre>
+</div>
+</div>
+<section id="in-sample-prediction-1" class="level4" data-number="9.4.4.1">
+<h4 data-number="9.4.4.1" class="anchored" data-anchor-id="in-sample-prediction-1"><span class="header-section-number">9.4.4.1</span> In-sample prediction</h4>
+<div id="480d4807" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>confusion_matrix(y_train, svm_model.predict(X_train))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>array([[294,   0],
+       [  0, 161]])</code></pre>
+</div>
+</div>
+</section>
+<section id="out-of-sample-prediction-1" class="level4" data-number="9.4.4.2">
+<h4 data-number="9.4.4.2" class="anchored" data-anchor-id="out-of-sample-prediction-1"><span class="header-section-number">9.4.4.2</span> Out-of-sample prediction</h4>
+<div id="230a5f77" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>confusion_matrix(y_test, svm_model.predict(X_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>array([[128,  22],
+       [  0,  78]])</code></pre>
 </div>
 </div>
 
 
+</section>
 </section>
 </section>
 
@@ -2169,14 +2074,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ch03_regularized_regression.html" class="pagination-link" aria-label="Regularized regression">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Regularized regression</span></span>
+      <a href="./ch08_tree.html" class="pagination-link" aria-label="Decision tree">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Decision tree</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ch05_classification.html" class="pagination-link" aria-label="Classification">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Classification</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

@@ -194,6 +194,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Decision tree</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch09_svm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Support vector machine</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -242,7 +248,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="4731c9a3" class="cell" data-execution_count="1">
+<div id="23f07f51" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
@@ -259,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="5.1" class="anchored" data-anchor-id="example-5.2"><span class="header-section-number">5.1</span> Example 5.2</h2>
 <section id="load-data" class="level3" data-number="5.1.1">
 <h3 data-number="5.1.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">5.1.1</span> Load data</h3>
-<div id="0bfa954c" class="cell" data-execution_count="2">
+<div id="06f0a144" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat1 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch7_dat1.csv"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dat1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -348,7 +354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="d00aaa9d" class="cell" data-execution_count="3">
+<div id="602a9256" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat1[[<span class="st">'X1'</span>, <span class="st">'X2'</span>]]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> LabelBinarizer().fit_transform(dat1[<span class="st">'class'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -356,7 +362,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="training-and-testing-data" class="level3" data-number="5.1.2">
 <h3 data-number="5.1.2" class="anchored" data-anchor-id="training-and-testing-data"><span class="header-section-number">5.1.2</span> Training and testing data</h3>
 <p>Let us use the first 7 observations as training data, while remaining 2 observations as testing data.</p>
-<div id="3fc06386" class="cell" data-execution_count="4">
+<div id="dce9e878" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    X, y, </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    test_size<span class="op">=</span><span class="dv">2</span>, train_size<span class="op">=</span><span class="dv">7</span>, </span>
@@ -368,11 +374,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="5.1.3" class="anchored" data-anchor-id="k-nearest-neighbors-classifier"><span class="header-section-number">5.1.3</span> k-nearest neighbors classifier</h3>
 <p>Use <code>KNeighborsClassifier()</code> from <code>sklearn.neighbors</code> module to define a kNN model for a classification problem.</p>
 <p>Set <code>n_neighbors=3</code> to train 3-NN in this example.</p>
-<div id="2c32d47f" class="cell" data-execution_count="5">
+<div id="2a29f324" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>knn_model <span class="op">=</span> KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Train the 3-NN classifier on training data.</p>
-<div id="6099b0bc" class="cell" data-execution_count="6">
+<div id="36895d2c" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>knn_model.fit(X_train, y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>/opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/sklearn/neighbors/_classification.py:238: DataConversionWarning: A column-vector y was passed when a 1d array was expected. Please change the shape of y to (n_samples,), for example using ravel().
@@ -787,7 +793,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>Use <code>predict()</code> method to make a prediction on training data.</p>
-<div id="55077a66" class="cell" data-execution_count="7">
+<div id="f08fbc9a" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(X_train).assign(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    observed_class <span class="op">=</span> y_train,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    pred_class <span class="op">=</span> knn_model.predict(X_train)</span>
@@ -865,7 +871,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>Also, maka a prediction on testing data.</p>
-<div id="3f5f7ea1" class="cell" data-execution_count="8">
+<div id="fca454c5" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(X_test).assign(</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    observed_class <span class="op">=</span> y_test,</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    pred_class <span class="op">=</span> knn_model.predict(X_test)</span>
@@ -913,7 +919,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <h2 data-number="5.2" class="anchored" data-anchor-id="examples-5.3---5.4"><span class="header-section-number">5.2</span> Examples 5.3 - 5.4</h2>
 <section id="load-data-1" class="level3" data-number="5.2.1">
 <h3 data-number="5.2.1" class="anchored" data-anchor-id="load-data-1"><span class="header-section-number">5.2.1</span> Load data</h3>
-<div id="339ed6b6" class="cell" data-execution_count="9">
+<div id="768ecca2" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dat3 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch5_dat3.csv"</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>dat3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
@@ -1006,7 +1012,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <section id="preprocess-data" class="level3" data-number="5.2.2">
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="preprocess-data"><span class="header-section-number">5.2.2</span> Preprocess data</h3>
 <p>Encode categorical values to integer variable by using <code>factorize()</code> method from <code>pandas</code> module.</p>
-<div id="345b1411" class="cell" data-execution_count="10">
+<div id="b141cbf3" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat3[[<span class="st">'gender'</span>, <span class="st">'age_gr'</span>]].copy()</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>X.gender, _ <span class="op">=</span> pd.factorize(X.gender)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>X.age_gr, _ <span class="op">=</span> pd.factorize(X.age_gr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1017,7 +1023,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <section id="estimation" class="level4" data-number="5.2.3.1">
 <h4 data-number="5.2.3.1" class="anchored" data-anchor-id="estimation"><span class="header-section-number">5.2.3.1</span> Estimation</h4>
 <p>Use <code>CategoricalNB()</code> to define a naive Bayes classifier. Pass <code>alpha=0</code> argument to do not apply smoothing.</p>
-<div id="9e70763a" class="cell" data-execution_count="11">
+<div id="78478167" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>nb_model <span class="op">=</span> CategoricalNB(alpha<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>nb_model.fit(X, dat3[<span class="st">'class'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -1436,7 +1442,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <section id="posterior" class="level4" data-number="5.2.3.2">
 <h4 data-number="5.2.3.2" class="anchored" data-anchor-id="posterior"><span class="header-section-number">5.2.3.2</span> Posterior</h4>
 <p>Call <code>predict_proba()</code> method to predict posterior probability of belonging to each class.</p>
-<div id="de192a51" class="cell" data-execution_count="12">
+<div id="33733c84" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>nb_model.predict_proba(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>array([[0.70588235, 0.29411765],
@@ -1454,7 +1460,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <section id="classification" class="level4" data-number="5.2.3.3">
 <h4 data-number="5.2.3.3" class="anchored" data-anchor-id="classification"><span class="header-section-number">5.2.3.3</span> Classification</h4>
 <p>Call <code>predict()</code> method to make classification.</p>
-<div id="432f7fa0" class="cell" data-execution_count="13">
+<div id="e3235feb" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>nb_model.predict(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>array([1, 1, 1, 1, 1, 2, 2, 2, 2])</code></pre>
@@ -1464,13 +1470,13 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </section>
 <section id="ex-5.4-evaluation-metrics" class="level3" data-number="5.2.4">
 <h3 data-number="5.2.4" class="anchored" data-anchor-id="ex-5.4-evaluation-metrics"><span class="header-section-number">5.2.4</span> Ex 5.4: Evaluation metrics</h3>
-<div id="24bf026f" class="cell" data-execution_count="14">
+<div id="60b9c6e7" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> dat3[<span class="st">'class'</span>]</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> nb_model.predict(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="confusion-matrix" class="level4" data-number="5.2.4.1">
 <h4 data-number="5.2.4.1" class="anchored" data-anchor-id="confusion-matrix"><span class="header-section-number">5.2.4.1</span> Confusion matrix</h4>
-<div id="6f43602b" class="cell" data-execution_count="15">
+<div id="c733d28c" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>confusion_matrix(y, y_pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>array([[4, 1],
@@ -1480,7 +1486,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </section>
 <section id="accuracy" class="level4" data-number="5.2.4.2">
 <h4 data-number="5.2.4.2" class="anchored" data-anchor-id="accuracy"><span class="header-section-number">5.2.4.2</span> Accuracy</h4>
-<div id="dacc8739" class="cell" data-execution_count="16">
+<div id="4ac80b8a" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>accuracy_score(y, y_pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>0.7777777777777778</code></pre>
@@ -1490,7 +1496,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <section id="sensitivity-recall" class="level4" data-number="5.2.4.3">
 <h4 data-number="5.2.4.3" class="anchored" data-anchor-id="sensitivity-recall"><span class="header-section-number">5.2.4.3</span> Sensitivity (Recall)</h4>
 <p>Sensitivity is the same to precision. Use <code>precision_score()</code> in <code>sklearn.metrics</code> module. Set class <code>1</code> to be a positive event in this example by passing <code>pos_label=1</code> argument.</p>
-<div id="6514a538" class="cell" data-execution_count="17">
+<div id="233df83f" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>precision_score(y, y_pred, pos_label<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>np.float64(0.8)</code></pre>
@@ -1500,7 +1506,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <section id="specificity" class="level4" data-number="5.2.4.4">
 <h4 data-number="5.2.4.4" class="anchored" data-anchor-id="specificity"><span class="header-section-number">5.2.4.4</span> Specificity</h4>
 <p>Specificity is the same to sensitivity with different event level, by passing <code>pos_label=2</code> argument.</p>
-<div id="f0614028" class="cell" data-execution_count="18">
+<div id="92386952" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>precision_score(y, y_pred, pos_label<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>np.float64(0.75)</code></pre>
@@ -1511,7 +1517,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <h4 data-number="5.2.4.5" class="anchored" data-anchor-id="f1-score"><span class="header-section-number">5.2.4.5</span> F1-score</h4>
 <p>F1 score is a harmonic mean of precision and recall.</p>
 <p>You can either indirectly compute by using precision and recall</p>
-<div id="3d66dfc9" class="cell" data-execution_count="19">
+<div id="38e24eda" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>precision <span class="op">=</span> precision_score(y, y_pred)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>recall <span class="op">=</span> recall_score(y, y_pred)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="op">*</span> precision <span class="op">*</span> recall <span class="op">/</span> (precision <span class="op">+</span> recall)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1520,7 +1526,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>or directly compute by using <code>f1_score</code> function.</p>
-<div id="6e810870" class="cell" data-execution_count="20">
+<div id="f248bee2" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>f1_score(y, y_pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <pre><code>np.float64(0.8)</code></pre>
@@ -1530,11 +1536,11 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <section id="roc-curve-and-auc" class="level4" data-number="5.2.4.6">
 <h4 data-number="5.2.4.6" class="anchored" data-anchor-id="roc-curve-and-auc"><span class="header-section-number">5.2.4.6</span> ROC curve and AUC</h4>
 <p>Computing a ROC curve requires posterior probability.</p>
-<div id="5584bc99" class="cell" data-execution_count="21">
+<div id="91099c1d" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>prob <span class="op">=</span> nb_model.predict_proba(X)[:, <span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Visualize ROC curve.</p>
-<div id="441b9c29" class="cell" data-execution_count="22">
+<div id="d8613756" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>fpr, tpr, thresholds <span class="op">=</span> roc_curve(y, y_score <span class="op">=</span> prob, pos_label<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>roc_auc <span class="op">=</span> auc(fpr, tpr)</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>display <span class="op">=</span> RocCurveDisplay(fpr<span class="op">=</span>fpr, tpr<span class="op">=</span>tpr, roc_auc<span class="op">=</span>roc_auc, pos_label<span class="op">=</span><span class="dv">1</span>)</span>
