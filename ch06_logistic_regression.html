@@ -200,6 +200,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Support vector machine</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch10_ensemble.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Ensemble</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -252,7 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="7b43eb6e" class="cell" data-execution_count="1">
+<div id="9a8a258c" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
@@ -264,7 +270,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="6.1" class="anchored" data-anchor-id="examples-6.1-6.3"><span class="header-section-number">6.1</span> Examples 6.1, 6.3</h2>
 <section id="load-data" class="level3" data-number="6.1.1">
 <h3 data-number="6.1.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">6.1.1</span> Load data</h3>
-<div id="87bc6783" class="cell" data-execution_count="2">
+<div id="b3cfbaa5" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat1 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch6_dat1.csv"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dat1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -395,7 +401,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="5c3e6548" class="cell" data-execution_count="3">
+<div id="8a54d93b" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat1[[<span class="st">'Break'</span>, <span class="st">'Sleep'</span>, <span class="st">'Circle'</span>]]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> LabelBinarizer().fit_transform(dat1[<span class="st">'Class'</span>]).ravel()</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dat1[<span class="st">'Class'</span>] <span class="op">=</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -406,26 +412,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="use-scikit-learn" class="level4" data-number="6.1.2.1">
 <h4 data-number="6.1.2.1" class="anchored" data-anchor-id="use-scikit-learn"><span class="header-section-number">6.1.2.1</span> Use <code>scikit-learn</code></h4>
 <p>Model training:</p>
-<div id="6ba7ce3b" class="cell" data-execution_count="4">
+<div id="5caa3336" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>logit_model <span class="op">=</span> LogisticRegression(penalty <span class="op">=</span> <span class="va">None</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>logit_fit <span class="op">=</span> logit_model.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Intercept:</p>
-<div id="238164b1" class="cell" data-execution_count="5">
+<div id="7b5a6d0a" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>logit_fit.intercept_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>array([-30.51046112])</code></pre>
 </div>
 </div>
 <p>Coefficients on variables:</p>
-<div id="e15f90a3" class="cell" data-execution_count="6">
+<div id="75cadd6e" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>logit_fit.coef_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>array([[2.03119671, 3.47062988, 2.41437184]])</code></pre>
 </div>
 </div>
 <p>Prediction:</p>
-<div id="26ebb18c" class="cell" data-execution_count="7">
+<div id="70ca9cda" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dat1.assign(</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    pred_logit <span class="op">=</span> np.diff(logit_fit.predict_log_proba(X), axis<span class="op">=</span><span class="dv">1</span>),</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    pred_prob <span class="op">=</span> logit_fit.predict_proba(X)[:, <span class="dv">1</span>],</span>
@@ -611,7 +617,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="use-statsmodels" class="level4" data-number="6.1.2.2">
 <h4 data-number="6.1.2.2" class="anchored" data-anchor-id="use-statsmodels"><span class="header-section-number">6.1.2.2</span> Use <code>statsmodels</code></h4>
 <p>Model training:</p>
-<div id="bc836935" class="cell" data-execution_count="8">
+<div id="41b28e49" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>logit_fit <span class="op">=</span> smf.logit(<span class="st">"Class ~ Break + Sleep + Circle"</span>, data <span class="op">=</span> dat1).fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Optimization terminated successfully.
@@ -620,7 +626,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Coefficient table:</p>
-<div id="69acc193" class="cell" data-execution_count="9">
+<div id="f162e159" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>logit_fit.summary().tables[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
@@ -677,7 +683,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Prediction:</p>
-<div id="81ab4adc" class="cell" data-execution_count="10">
+<div id="21e4faeb" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dat1.assign(</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    pred_logit <span class="op">=</span> logit_fit.predict(dat1, which <span class="op">=</span> <span class="st">'linear'</span>),</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    pred_prob <span class="op">=</span> logit_fit.predict(dat1, which <span class="op">=</span> <span class="st">'mean'</span>),</span>
@@ -849,7 +855,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="use-statsmodels-1" class="level4" data-number="6.1.3.1">
 <h4 data-number="6.1.3.1" class="anchored" data-anchor-id="use-statsmodels-1"><span class="header-section-number">6.1.3.1</span> Use <code>statsmodels</code></h4>
 <p>Model training:</p>
-<div id="532b9485" class="cell" data-execution_count="11">
+<div id="c5fe76a8" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>probit_fit <span class="op">=</span> smf.probit(<span class="st">"Class ~ Break + Sleep + Circle"</span>, data <span class="op">=</span> dat1).fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Optimization terminated successfully.
@@ -858,7 +864,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Coefficient table:</p>
-<div id="3a4723c9" class="cell" data-execution_count="12">
+<div id="822ca1b7" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>probit_fit.summary().tables[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div>
@@ -915,7 +921,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Prediction:</p>
-<div id="7828aa5f" class="cell" data-execution_count="13">
+<div id="f4c2bb90" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>dat1.assign(</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    pred_probit <span class="op">=</span> probit_fit.predict(dat1, which <span class="op">=</span> <span class="st">'linear'</span>),</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    pred_prob <span class="op">=</span> probit_fit.predict(dat1, which <span class="op">=</span> <span class="st">'mean'</span>),</span>
@@ -1087,7 +1093,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="6.2" class="anchored" data-anchor-id="example-6.4"><span class="header-section-number">6.2</span> Example 6.4</h2>
 <section id="load-data-1" class="level3" data-number="6.2.1">
 <h3 data-number="6.2.1" class="anchored" data-anchor-id="load-data-1"><span class="header-section-number">6.2.1</span> Load data</h3>
-<div id="ec09003a" class="cell" data-execution_count="14">
+<div id="392106d0" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>dat2 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch6_dat2.csv"</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>dat2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
@@ -1220,7 +1226,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="e1542ecf" class="cell" data-execution_count="15">
+<div id="4a24cc9b" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat2[[<span class="st">'X1'</span>, <span class="st">'X2'</span>]]</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> LabelEncoder().fit_transform(dat2[<span class="st">'Y'</span>]).ravel()</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>dat2[<span class="st">'Y'</span>] <span class="op">=</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1229,19 +1235,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="use-scikit-learn-1" class="level3" data-number="6.2.2">
 <h3 data-number="6.2.2" class="anchored" data-anchor-id="use-scikit-learn-1"><span class="header-section-number">6.2.2</span> Use <code>scikit-learn</code></h3>
 <p>Still use <code>LogisticRegression()</code> to fit multinomial logistic regression.</p>
-<div id="1f4b14c4" class="cell" data-execution_count="16">
+<div id="1178bbaf" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>mnlogit_model <span class="op">=</span> LogisticRegression(penalty<span class="op">=</span><span class="va">None</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>mnlogit_fit <span class="op">=</span> mnlogit_model.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Intercept:</p>
-<div id="a0cd1bdd" class="cell" data-execution_count="17">
+<div id="d2e32f9d" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>mnlogit_fit.intercept_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>array([ -4.43704699, -78.4303051 ,  82.86735209])</code></pre>
 </div>
 </div>
 <p>Coefficients on variables:</p>
-<div id="0bb6584c" class="cell" data-execution_count="18">
+<div id="30956035" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>mnlogit_fit.coef_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>array([[  0.21911162,   0.55762967],
@@ -1250,7 +1256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Prediction:</p>
-<div id="67480d61" class="cell" data-execution_count="19">
+<div id="37aa43b9" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pd.concat(</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    [dat2, </span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>     pd.DataFrame(</span>
@@ -1470,7 +1476,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="use-statsmodels-2" class="level3" data-number="6.2.3">
 <h3 data-number="6.2.3" class="anchored" data-anchor-id="use-statsmodels-2"><span class="header-section-number">6.2.3</span> Use <code>statsmodels</code></h3>
 <p>Use <code>mnlogit()</code> to train a model:</p>
-<div id="923e64e6" class="cell" data-execution_count="20">
+<div id="2e4a4736" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>mnlogit_fit <span class="op">=</span> smf.mnlogit(<span class="st">"Y ~ X1 + X2"</span>, data<span class="op">=</span>dat2).fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Optimization terminated successfully.
@@ -1479,7 +1485,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Coefficient table:</p>
-<div id="46be6e8a" class="cell" data-execution_count="21">
+<div id="940ef00d" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mnlogit_fit.summary().tables[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="21">
 <div>
@@ -1563,7 +1569,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Prediction:</p>
-<div id="90c7786b" class="cell" data-execution_count="22">
+<div id="6e556d18" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>pd.concat([dat2, mnlogit_fit.predict(dat2)], axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="22">
 <div>
@@ -1753,7 +1759,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Confusion matrix:</p>
-<div id="1be363f8" class="cell" data-execution_count="23">
+<div id="99607d88" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>mnlogit_fit.pred_table()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="23">
 <pre><code>array([[3., 2., 2.],
@@ -1767,7 +1773,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="6.3" class="anchored" data-anchor-id="example-6.5"><span class="header-section-number">6.3</span> Example 6.5</h2>
 <section id="load-data-2" class="level3" data-number="6.3.1">
 <h3 data-number="6.3.1" class="anchored" data-anchor-id="load-data-2"><span class="header-section-number">6.3.1</span> Load data</h3>
-<div id="a4a7b6a1" class="cell" data-execution_count="24">
+<div id="ec1bb6cb" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>dat3 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch6_dat3.csv"</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat3[[<span class="st">'N'</span>, <span class="st">'L'</span>]]</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> OrdinalEncoder().fit_transform(dat3[[<span class="st">'Y'</span>]])</span>
@@ -1777,7 +1783,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="use-statsmodels-3" class="level3" data-number="6.3.2">
 <h3 data-number="6.3.2" class="anchored" data-anchor-id="use-statsmodels-3"><span class="header-section-number">6.3.2</span> Use <code>statsmodels</code></h3>
 <p>Train a model. Use <code>statsmodels.miscmodels.ordinal_model.OrderedModel()</code>. Set <code>distr='logit'</code> to use logit link function.</p>
-<div id="f98bbd2c" class="cell" data-execution_count="25">
+<div id="87ccda09" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>ordinal_fit <span class="op">=</span> OrderedModel(y, X, distr<span class="op">=</span><span class="st">'logit'</span>).fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Optimization terminated successfully.
@@ -1787,7 +1793,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Coefficient tables:</p>
-<div id="afae2859" class="cell" data-execution_count="26">
+<div id="bffb411b" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>ordinal_fit.summary().tables[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="26">
 <div>
@@ -1844,7 +1850,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Prediction:</p>
-<div id="a0bcbba7" class="cell" data-execution_count="27">
+<div id="c0f226a2" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>ordinal_fit.predict(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="27">
 <div>
@@ -1941,7 +1947,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Confusion matrix:</p>
-<div id="581b0995" class="cell" data-execution_count="28">
+<div id="53ea7729" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>ordinal_fit.pred_table()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="28">
 <div>
