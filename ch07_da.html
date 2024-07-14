@@ -218,6 +218,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Hierarchical clustering</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch13_nonhierarchical_clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Non-hierarchical clustering</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -269,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="f9ebb543" class="cell" data-execution_count="1">
+<div id="2a17320f" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.discriminant_analysis <span class="im">import</span> LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis</span>
@@ -282,7 +288,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="7.1" class="anchored" data-anchor-id="example-7.4"><span class="header-section-number">7.1</span> Example 7.4</h2>
 <section id="load-data" class="level3" data-number="7.1.1">
 <h3 data-number="7.1.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">7.1.1</span> Load data</h3>
-<div id="959c47e3" class="cell" data-execution_count="2">
+<div id="c01c1852" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat1 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch7_dat1.csv"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat1[[<span class="st">'X1'</span>, <span class="st">'X2'</span>]]</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> LabelBinarizer().fit_transform(dat1[<span class="st">'class'</span>]).ravel()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -291,26 +297,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="use-scikit-learn-for-lda" class="level3" data-number="7.1.2">
 <h3 data-number="7.1.2" class="anchored" data-anchor-id="use-scikit-learn-for-lda"><span class="header-section-number">7.1.2</span> Use <code>scikit-learn</code> for LDA</h3>
 <p>Training with <code>priors=[0.5, 0.5]</code>:</p>
-<div id="a51faebe" class="cell" data-execution_count="3">
+<div id="b9829201" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>lda_model <span class="op">=</span> LinearDiscriminantAnalysis(priors<span class="op">=</span>[<span class="fl">0.5</span>, <span class="fl">0.5</span>])</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>lda_fit <span class="op">=</span> lda_model.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Intercept:</p>
-<div id="9f6a08ac" class="cell" data-execution_count="4">
+<div id="318f4e73" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lda_fit.intercept_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>array([0.79565916])</code></pre>
 </div>
 </div>
 <p>Coefficients:</p>
-<div id="0a3c07f7" class="cell" data-execution_count="5">
+<div id="d2e324ba" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>lda_fit.coef_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>array([[ 1.50803859, -1.54180064]])</code></pre>
 </div>
 </div>
 <p>Posterior probability:</p>
-<div id="f86efed3" class="cell" data-execution_count="6">
+<div id="9e8c75f8" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lda_fit.predict_proba(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>array([[0.92105384, 0.07894616],
@@ -325,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Classification:</p>
-<div id="82715bcf" class="cell" data-execution_count="7">
+<div id="711e681d" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>lda_fit.predict(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>array([0, 1, 0, 1, 0, 0, 1, 1, 1])</code></pre>
@@ -337,7 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="7.2" class="anchored" data-anchor-id="example-7.6"><span class="header-section-number">7.2</span> Example 7.6</h2>
 <section id="load-data-1" class="level3" data-number="7.2.1">
 <h3 data-number="7.2.1" class="anchored" data-anchor-id="load-data-1"><span class="header-section-number">7.2.1</span> Load data</h3>
-<div id="402d70ae" class="cell" data-execution_count="8">
+<div id="f048ff0a" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dat1 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch7_dat1.csv"</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat1[[<span class="st">'X1'</span>, <span class="st">'X2'</span>]]</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> LabelBinarizer().fit_transform(dat1[<span class="st">'class'</span>]).ravel()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -346,12 +352,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="use-scikit-learn-for-qda" class="level3" data-number="7.2.2">
 <h3 data-number="7.2.2" class="anchored" data-anchor-id="use-scikit-learn-for-qda"><span class="header-section-number">7.2.2</span> Use <code>scikit-learn</code> for QDA</h3>
 <p>Training with <code>priors=[0.5, 0.5]</code>:</p>
-<div id="b2673fb8" class="cell" data-execution_count="9">
+<div id="59d7abf9" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>qda_model <span class="op">=</span> QuadraticDiscriminantAnalysis(priors<span class="op">=</span>[<span class="fl">0.5</span>, <span class="fl">0.5</span>], store_covariance<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>qda_fit <span class="op">=</span> qda_model.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Variance-covariance matrix within each class:</p>
-<div id="07375a71" class="cell" data-execution_count="10">
+<div id="0381bf2b" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>qda_fit.covariance_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>[array([[3.33333333, 1.        ],
@@ -361,7 +367,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Posterior probabilty:</p>
-<div id="a0eb6e3c" class="cell" data-execution_count="11">
+<div id="9e6b5931" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>qda_fit.predict_proba(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>array([[9.20146229e-01, 7.98537705e-02],
@@ -376,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Classification:</p>
-<div id="7e2382f7" class="cell" data-execution_count="12">
+<div id="1eae7cb1" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>qda_fit.predict(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>array([0, 1, 1, 1, 0, 0, 0, 1, 1])</code></pre>
@@ -388,7 +394,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="7.3" class="anchored" data-anchor-id="example-7.7"><span class="header-section-number">7.3</span> Example 7.7</h2>
 <section id="load-data-2" class="level3" data-number="7.3.1">
 <h3 data-number="7.3.1" class="anchored" data-anchor-id="load-data-2"><span class="header-section-number">7.3.1</span> Load data</h3>
-<div id="0af6830b" class="cell" data-execution_count="13">
+<div id="0fcc1973" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>iris <span class="op">=</span> pd.read_csv(<span class="st">"data/iris.csv"</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> iris[[<span class="st">'Sepal.Length'</span>, <span class="st">'Sepal.Width'</span>, <span class="st">'Petal.Length'</span>, <span class="st">'Petal.Width'</span>]]</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> LabelEncoder().fit_transform(iris[<span class="st">'Species'</span>]).ravel()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -396,7 +402,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="traintest-split" class="level3" data-number="7.3.2">
 <h3 data-number="7.3.2" class="anchored" data-anchor-id="traintest-split"><span class="header-section-number">7.3.2</span> Train/test split</h3>
-<div id="37232c72" class="cell" data-execution_count="14">
+<div id="97a01e01" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>random.seed(<span class="dv">478245</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.4</span>, stratify<span class="op">=</span>y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -404,28 +410,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="lda" class="level3" data-number="7.3.3">
 <h3 data-number="7.3.3" class="anchored" data-anchor-id="lda"><span class="header-section-number">7.3.3</span> LDA</h3>
 <p>Training:</p>
-<div id="3d518eb6" class="cell" data-execution_count="15">
+<div id="721b4117" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>lda_model <span class="op">=</span> LinearDiscriminantAnalysis()</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>lda_fit <span class="op">=</span> lda_model.fit(X_train, y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Intercept:</p>
-<div id="22a61c43" class="cell" data-execution_count="16">
+<div id="90b34f6a" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>lda_fit.intercept_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
-<pre><code>array([-27.4179638 ,   2.89946929, -24.83609463])</code></pre>
+<pre><code>array([-10.48754038,  -2.38323114, -33.76659839])</code></pre>
 </div>
 </div>
 <p>Coefficients:</p>
-<div id="defd7873" class="cell" data-execution_count="17">
+<div id="53543e9d" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>lda_fit.coef_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
-<pre><code>array([[  7.74753442,  13.26347634, -17.17284053, -19.11040718],
-       [ -2.30158311,  -4.98138536,   4.91271954,   3.40813405],
-       [ -5.44595132,  -8.28209098,  12.26012099,  15.70227314]])</code></pre>
+<pre><code>array([[  4.4880493 ,  11.50840184, -14.58512921, -19.61833805],
+       [ -1.45787567,  -3.89693795,   4.50845243,   2.4780865 ],
+       [ -3.03017363,  -7.61146389,  10.07667678,  17.14025155]])</code></pre>
 </div>
 </div>
 <p>Prediction:</p>
-<div id="4c3688e6" class="cell" data-execution_count="18">
+<div id="d6ca5000" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> lda_fit.predict(X_test)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>X_test.assign(</span>
@@ -451,76 +457,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">99</td>
-<td>5.7</td>
+<td data-quarto-table-cell-role="th">122</td>
+<td>7.7</td>
 <td>2.8</td>
-<td>4.1</td>
-<td>1.3</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">55</td>
-<td>5.7</td>
-<td>2.8</td>
-<td>4.5</td>
-<td>1.3</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">91</td>
-<td>6.1</td>
-<td>3.0</td>
-<td>4.6</td>
-<td>1.4</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">113</td>
-<td>5.7</td>
-<td>2.5</td>
-<td>5.0</td>
+<td>6.7</td>
 <td>2.0</td>
 <td>2</td>
 <td>2</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">127</td>
-<td>6.1</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">77</td>
+<td>6.7</td>
 <td>3.0</td>
-<td>4.9</td>
-<td>1.8</td>
-<td>2</td>
-<td>2</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">100</td>
-<td>6.3</td>
-<td>3.3</td>
-<td>6.0</td>
-<td>2.5</td>
-<td>2</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">103</td>
-<td>6.3</td>
-<td>2.9</td>
-<td>5.6</td>
-<td>1.8</td>
-<td>2</td>
-<td>2</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>4.6</td>
-<td>3.1</td>
-<td>1.5</td>
-<td>0.2</td>
-<td>0</td>
-<td>0</td>
+<td>5.0</td>
+<td>1.7</td>
+<td>1</td>
+<td>1</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">96</td>
@@ -532,109 +484,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>1</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">16</td>
-<td>5.4</td>
-<td>3.9</td>
-<td>1.3</td>
-<td>0.4</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">30</td>
-<td>4.8</td>
-<td>3.1</td>
-<td>1.6</td>
-<td>0.2</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">61</td>
+<td data-quarto-table-cell-role="th">149</td>
 <td>5.9</td>
 <td>3.0</td>
-<td>4.2</td>
-<td>1.5</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">137</td>
-<td>6.4</td>
-<td>3.1</td>
-<td>5.5</td>
+<td>5.1</td>
 <td>1.8</td>
 <td>2</td>
 <td>2</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">117</td>
-<td>7.7</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">80</td>
+<td>5.5</td>
+<td>2.4</td>
 <td>3.8</td>
-<td>6.7</td>
+<td>1.1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>4.3</td>
+<td>3.0</td>
+<td>1.1</td>
+<td>0.1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">132</td>
+<td>6.4</td>
+<td>2.8</td>
+<td>5.6</td>
 <td>2.2</td>
 <td>2</td>
 <td>2</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">116</td>
-<td>6.5</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">138</td>
+<td>6.0</td>
 <td>3.0</td>
-<td>5.5</td>
+<td>4.8</td>
 <td>1.8</td>
 <td>2</td>
 <td>2</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">58</td>
-<td>6.6</td>
-<td>2.9</td>
-<td>4.6</td>
-<td>1.3</td>
-<td>1</td>
-<td>1</td>
-</tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">128</td>
-<td>6.4</td>
-<td>2.8</td>
-<td>5.6</td>
-<td>2.1</td>
-<td>2</td>
-<td>2</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">121</td>
-<td>5.6</td>
-<td>2.8</td>
-<td>4.9</td>
-<td>2.0</td>
-<td>2</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">1</td>
-<td>4.9</td>
-<td>3.0</td>
-<td>1.4</td>
-<td>0.2</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">102</td>
-<td>7.1</td>
-<td>3.0</td>
-<td>5.9</td>
-<td>2.1</td>
-<td>2</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">57</td>
-<td>4.9</td>
-<td>2.4</td>
-<td>3.3</td>
+<td data-quarto-table-cell-role="th">62</td>
+<td>6.0</td>
+<td>2.2</td>
+<td>4.0</td>
 <td>1.0</td>
 <td>1</td>
 <td>1</td>
@@ -649,67 +547,121 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>0</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">86</td>
-<td>6.7</td>
-<td>3.1</td>
-<td>4.7</td>
-<td>1.5</td>
+<td data-quarto-table-cell-role="th">92</td>
+<td>5.8</td>
+<td>2.6</td>
+<td>4.0</td>
+<td>1.2</td>
 <td>1</td>
 <td>1</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">13</td>
-<td>4.3</td>
-<td>3.0</td>
-<td>1.1</td>
+<td data-quarto-table-cell-role="th">8</td>
+<td>4.4</td>
+<td>2.9</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">48</td>
+<td>5.3</td>
+<td>3.7</td>
+<td>1.5</td>
+<td>0.2</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">32</td>
+<td>5.2</td>
+<td>4.1</td>
+<td>1.5</td>
 <td>0.1</td>
 <td>0</td>
 <td>0</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">142</td>
-<td>5.8</td>
+<td data-quarto-table-cell-role="th">91</td>
+<td>6.1</td>
+<td>3.0</td>
+<td>4.6</td>
+<td>1.4</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">112</td>
+<td>6.8</td>
+<td>3.0</td>
+<td>5.5</td>
+<td>2.1</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">49</td>
+<td>5.0</td>
+<td>3.3</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">75</td>
+<td>6.6</td>
+<td>3.0</td>
+<td>4.4</td>
+<td>1.4</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">83</td>
+<td>6.0</td>
 <td>2.7</td>
 <td>5.1</td>
+<td>1.6</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">130</td>
+<td>7.4</td>
+<td>2.8</td>
+<td>6.1</td>
 <td>1.9</td>
 <td>2</td>
 <td>2</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">42</td>
-<td>4.4</td>
-<td>3.2</td>
-<td>1.3</td>
-<td>0.2</td>
-<td>0</td>
-<td>0</td>
-</tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">41</td>
-<td>4.5</td>
-<td>2.3</td>
-<td>1.3</td>
-<td>0.3</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">15</td>
-<td>5.7</td>
-<td>4.4</td>
-<td>1.5</td>
-<td>0.4</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">11</td>
+<td data-quarto-table-cell-role="th">12</td>
 <td>4.8</td>
-<td>3.4</td>
-<td>1.6</td>
-<td>0.2</td>
+<td>3.0</td>
+<td>1.4</td>
+<td>0.1</td>
 <td>0</td>
 <td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">116</td>
+<td>6.5</td>
+<td>3.0</td>
+<td>5.5</td>
+<td>1.8</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">50</td>
+<td>7.0</td>
+<td>3.2</td>
+<td>4.7</td>
+<td>1.4</td>
+<td>1</td>
+<td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">47</td>
@@ -721,148 +673,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>0</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">14</td>
-<td>5.8</td>
-<td>4.0</td>
-<td>1.2</td>
-<td>0.2</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">119</td>
-<td>6.0</td>
-<td>2.2</td>
-<td>5.0</td>
-<td>1.5</td>
-<td>2</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
-<td>4.4</td>
-<td>2.9</td>
-<td>1.4</td>
-<td>0.2</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">111</td>
-<td>6.4</td>
-<td>2.7</td>
-<td>5.3</td>
-<td>1.9</td>
-<td>2</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">144</td>
-<td>6.7</td>
+<td data-quarto-table-cell-role="th">23</td>
+<td>5.1</td>
 <td>3.3</td>
-<td>5.7</td>
+<td>1.7</td>
+<td>0.5</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">69</td>
+<td>5.6</td>
 <td>2.5</td>
-<td>2</td>
-<td>2</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">90</td>
-<td>5.5</td>
-<td>2.6</td>
-<td>4.4</td>
-<td>1.2</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">53</td>
-<td>5.5</td>
-<td>2.3</td>
-<td>4.0</td>
-<td>1.3</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">21</td>
-<td>5.1</td>
-<td>3.7</td>
-<td>1.5</td>
-<td>0.4</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">26</td>
-<td>5.0</td>
-<td>3.4</td>
-<td>1.6</td>
-<td>0.4</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">110</td>
-<td>6.5</td>
-<td>3.2</td>
-<td>5.1</td>
-<td>2.0</td>
-<td>2</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">98</td>
-<td>5.1</td>
-<td>2.5</td>
-<td>3.0</td>
+<td>3.9</td>
 <td>1.1</td>
 <td>1</td>
 <td>1</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">115</td>
-<td>6.4</td>
-<td>3.2</td>
-<td>5.3</td>
-<td>2.3</td>
-<td>2</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">88</td>
-<td>5.6</td>
-<td>3.0</td>
-<td>4.1</td>
-<td>1.3</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">114</td>
-<td>5.8</td>
-<td>2.8</td>
-<td>5.1</td>
-<td>2.4</td>
-<td>2</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">89</td>
-<td>5.5</td>
-<td>2.5</td>
-<td>4.0</td>
-<td>1.3</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">0</td>
-<td>5.1</td>
-<td>3.5</td>
-<td>1.4</td>
-<td>0.2</td>
-<td>0</td>
-<td>0</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">54</td>
@@ -874,15 +700,222 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>1</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">123</td>
-<td>6.3</td>
-<td>2.7</td>
-<td>4.9</td>
-<td>1.8</td>
+<td data-quarto-table-cell-role="th">135</td>
+<td>7.7</td>
+<td>3.0</td>
+<td>6.1</td>
+<td>2.3</td>
 <td>2</td>
 <td>2</td>
 </tr>
 <tr class="odd">
+<td data-quarto-table-cell-role="th">134</td>
+<td>6.1</td>
+<td>2.6</td>
+<td>5.6</td>
+<td>1.4</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">139</td>
+<td>6.9</td>
+<td>3.1</td>
+<td>5.4</td>
+<td>2.1</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">19</td>
+<td>5.1</td>
+<td>3.8</td>
+<td>1.5</td>
+<td>0.3</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>5.1</td>
+<td>3.5</td>
+<td>1.4</td>
+<td>0.3</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">93</td>
+<td>5.0</td>
+<td>2.3</td>
+<td>3.3</td>
+<td>1.0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">76</td>
+<td>6.8</td>
+<td>2.8</td>
+<td>4.8</td>
+<td>1.4</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">137</td>
+<td>6.4</td>
+<td>3.1</td>
+<td>5.5</td>
+<td>1.8</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>4.9</td>
+<td>3.0</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">71</td>
+<td>6.1</td>
+<td>2.8</td>
+<td>4.0</td>
+<td>1.3</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">43</td>
+<td>5.0</td>
+<td>3.5</td>
+<td>1.6</td>
+<td>0.6</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4.6</td>
+<td>3.1</td>
+<td>1.5</td>
+<td>0.2</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">117</td>
+<td>7.7</td>
+<td>3.8</td>
+<td>6.7</td>
+<td>2.2</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">108</td>
+<td>6.7</td>
+<td>2.5</td>
+<td>5.8</td>
+<td>1.8</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">111</td>
+<td>6.4</td>
+<td>2.7</td>
+<td>5.3</td>
+<td>1.9</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">36</td>
+<td>5.5</td>
+<td>3.5</td>
+<td>1.3</td>
+<td>0.2</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">136</td>
+<td>6.3</td>
+<td>3.4</td>
+<td>5.6</td>
+<td>2.4</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">51</td>
+<td>6.4</td>
+<td>3.2</td>
+<td>4.5</td>
+<td>1.5</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">146</td>
+<td>6.3</td>
+<td>2.5</td>
+<td>5.0</td>
+<td>1.9</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">57</td>
+<td>4.9</td>
+<td>2.4</td>
+<td>3.3</td>
+<td>1.0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">30</td>
+<td>4.8</td>
+<td>3.1</td>
+<td>1.6</td>
+<td>0.2</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">44</td>
+<td>5.1</td>
+<td>3.8</td>
+<td>1.9</td>
+<td>0.4</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">124</td>
+<td>6.7</td>
+<td>3.3</td>
+<td>5.7</td>
+<td>2.1</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">94</td>
+<td>5.6</td>
+<td>2.7</td>
+<td>4.2</td>
+<td>1.3</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
 <td data-quarto-table-cell-role="th">74</td>
 <td>6.4</td>
 <td>2.9</td>
@@ -891,57 +924,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>1</td>
 <td>1</td>
 </tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">22</td>
+<td>4.6</td>
+<td>3.6</td>
+<td>1.0</td>
+<td>0.2</td>
+<td>0</td>
+<td>0</td>
+</tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">105</td>
-<td>7.6</td>
+<td data-quarto-table-cell-role="th">102</td>
+<td>7.1</td>
 <td>3.0</td>
-<td>6.6</td>
+<td>5.9</td>
 <td>2.1</td>
 <td>2</td>
 <td>2</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">82</td>
-<td>5.8</td>
-<td>2.7</td>
-<td>3.9</td>
-<td>1.2</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">38</td>
-<td>4.4</td>
-<td>3.0</td>
-<td>1.3</td>
-<td>0.2</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">7</td>
-<td>5.0</td>
-<td>3.4</td>
+<td data-quarto-table-cell-role="th">9</td>
+<td>4.9</td>
+<td>3.1</td>
 <td>1.5</td>
-<td>0.2</td>
+<td>0.1</td>
 <td>0</td>
 <td>0</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">50</td>
-<td>7.0</td>
-<td>3.2</td>
-<td>4.7</td>
-<td>1.4</td>
-<td>1</td>
-<td>1</td>
+<td data-quarto-table-cell-role="th">145</td>
+<td>6.7</td>
+<td>3.0</td>
+<td>5.2</td>
+<td>2.3</td>
+<td>2</td>
+<td>2</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">60</td>
-<td>5.0</td>
-<td>2.0</td>
-<td>3.5</td>
-<td>1.0</td>
+<td data-quarto-table-cell-role="th">86</td>
+<td>6.7</td>
+<td>3.1</td>
+<td>4.7</td>
+<td>1.5</td>
 <td>1</td>
 <td>1</td>
 </tr>
@@ -955,38 +979,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>1</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">66</td>
-<td>5.6</td>
-<td>3.0</td>
-<td>4.5</td>
+<td data-quarto-table-cell-role="th">10</td>
+<td>5.4</td>
+<td>3.7</td>
 <td>1.5</td>
-<td>1</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">35</td>
-<td>5.0</td>
-<td>3.2</td>
-<td>1.2</td>
 <td>0.2</td>
 <td>0</td>
 <td>0</td>
 </tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">37</td>
-<td>4.9</td>
-<td>3.6</td>
-<td>1.4</td>
-<td>0.1</td>
-<td>0</td>
-<td>0</td>
-</tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">149</td>
-<td>5.9</td>
-<td>3.0</td>
-<td>5.1</td>
-<td>1.8</td>
+<td data-quarto-table-cell-role="th">144</td>
+<td>6.7</td>
+<td>3.3</td>
+<td>5.7</td>
+<td>2.5</td>
 <td>2</td>
 <td>2</td>
 </tr>
@@ -998,11 +1004,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Confusion matrix:</p>
-<div id="0efbd1ef" class="cell" data-execution_count="19">
+<div id="20c3e101" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>confusion_matrix(y_test, y_pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>array([[20,  0,  0],
-       [ 0, 20,  0],
+       [ 0, 19,  1],
        [ 0,  0, 20]])</code></pre>
 </div>
 </div>
