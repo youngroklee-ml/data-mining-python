@@ -1,0 +1,94 @@
+# Hierarchical clustering
+
+```{python}
+import pandas as pd
+import numpy as np
+from sklearn.metrics import silhouette_score
+from sklearn.cluster import AgglomerativeClustering
+import matplotlib.pyplot as plt
+```
+
+## Example 12.1
+
+### Load data
+
+```{python}
+dat1 = pd.read_csv("data/ch12_dat1.csv")
+X = dat1[['X1', 'X2']]
+```
+
+### Average linkage
+
+Create `AgglomerativeClustering` object with specifying number of clusters `n_clusters` and linkage method `linkage`.
+
+```{python}
+hc_c = AgglomerativeClustering(n_clusters=3, linkage='average')
+hc_c.fit(X)
+```
+
+`labels_` attribute stores cluster label for each observation.
+
+```{python}
+dat1.assign(
+  cluster = hc_c.labels_
+)
+```
+
+
+
+## Example 12.2
+
+### Load data
+
+```{python}
+dat2 = pd.read_csv("data/ch12_dat2.csv")
+X = dat2.drop('ID', axis=1)
+```
+
+### Ward's method
+
+```{python}
+hc_c = AgglomerativeClustering(n_clusters=3, linkage='ward')
+hc_c.fit(X)
+```
+
+```{python}
+dat2.assign(
+  cluster = hc_c.labels_
+)
+```
+
+
+## Example 12.5
+
+### Load data
+
+```{python}
+dat2 = pd.read_csv("data/ch12_dat2.csv")
+X = dat2.drop('ID', axis=1)
+```
+
+### Average silhouette width
+
+Compute average silhouette width by number of clusters. Use `silhouette_score()` from `sklearn.metrics` module.
+
+```{python}
+n_clusters = np.arange(start=2, stop=7)
+avg_silhouette = list()
+for k in n_clusters:
+  hc_c = AgglomerativeClustering(n_clusters=k, linkage='ward')
+  hc_c.fit(X)
+  avg_silhouette.append(silhouette_score(X, hc_c.labels_))
+```
+
+
+Visualize average silhouette width by number of clusters.
+
+```{python}
+plt.figure()
+plt.scatter(
+  x=n_clusters,
+  y=avg_silhouette
+)
+plt.show()
+```
