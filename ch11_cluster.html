@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Youngrok Lee">
-<meta name="dcterms.date" content="2024-07-14">
 
-<title>Data Mining with Python</title>
+<title>Data Mining with Python - 11&nbsp; Cluster analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,17 +20,51 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ch02_regression.html" rel="next">
+<link href="./ch10_ensemble.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,6 +101,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -82,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch11_cluster.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Cluster analysis</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -112,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
   </div>
 </li>
@@ -172,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch11_cluster.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch11_cluster.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Cluster analysis</span></span></a>
   </div>
 </li>
@@ -186,7 +221,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface"><span class="header-section-number">1</span> Preface</a></li>
+  <li><a href="#examples-11.1-11.3" id="toc-examples-11.1-11.3" class="nav-link active" data-scroll-target="#examples-11.1-11.3"><span class="header-section-number">11.1</span> Examples 11.1, 11.3</a>
+  <ul class="collapse">
+  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data"><span class="header-section-number">11.1.1</span> Load data</a></li>
+  <li><a href="#ex-11.1" id="toc-ex-11.1" class="nav-link" data-scroll-target="#ex-11.1"><span class="header-section-number">11.1.2</span> Ex 11.1</a></li>
+  <li><a href="#ex-11.3" id="toc-ex-11.3" class="nav-link" data-scroll-target="#ex-11.3"><span class="header-section-number">11.1.3</span> Ex 11.3</a></li>
+  </ul></li>
+  <li><a href="#example-11.4" id="toc-example-11.4" class="nav-link" data-scroll-target="#example-11.4"><span class="header-section-number">11.2</span> Example 11.4</a>
+  <ul class="collapse">
+  <li><a href="#load-data-1" id="toc-load-data-1" class="nav-link" data-scroll-target="#load-data-1"><span class="header-section-number">11.2.1</span> Load data</a></li>
+  <li><a href="#jaccard-index" id="toc-jaccard-index" class="nav-link" data-scroll-target="#jaccard-index"><span class="header-section-number">11.2.2</span> Jaccard index</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -195,26 +240,14 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Data Mining with Python</h1>
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Cluster analysis</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Youngrok Lee </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">July 14, 2024</p>
-    </div>
-  </div>
   
     
   </div>
@@ -224,11 +257,272 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Preface</h1>
-<p>This is a book to convert example code on <a href="https://youngroklee-ml.github.io/data-mining-techniques/">https://youngroklee-ml.github.io/data-mining-techniques/</a> into Python.</p>
+<div id="15f7a067" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> pairwise</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> jaccard_score</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="examples-11.1-11.3" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="examples-11.1-11.3"><span class="header-section-number">11.1</span> Examples 11.1, 11.3</h2>
+<section id="load-data" class="level3" data-number="11.1.1">
+<h3 data-number="11.1.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">11.1.1</span> Load data</h3>
+<div id="0e1511f3" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat1 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch11_dat1.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat1[[<span class="st">'X1'</span>, <span class="st">'X2'</span>, <span class="st">'X3'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="ex-11.1" class="level3" data-number="11.1.2">
+<h3 data-number="11.1.2" class="anchored" data-anchor-id="ex-11.1"><span class="header-section-number">11.1.2</span> Ex 11.1</h3>
+<section id="euclidean-distance" class="level4" data-number="11.1.2.1">
+<h4 data-number="11.1.2.1" class="anchored" data-anchor-id="euclidean-distance"><span class="header-section-number">11.1.2.1</span> Euclidean distance</h4>
+<div id="31f9bcd7" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>D1 <span class="op">=</span> pairwise.euclidean_distances(X)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>np.<span class="bu">round</span>(D1, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>array([[ 0.  ,  8.31, 24.74, 16.91, 15.17, 10.1 , 27.17, 27.87, 33.03,
+        24.37],
+       [ 8.31,  0.  , 16.76,  9.11,  9.43,  3.  , 19.05, 20.35, 25.57,
+        17.75],
+       [24.74, 16.76,  0.  ,  7.87, 12.08, 16.55,  3.16, 10.05, 14.53,
+        11.75],
+       [16.91,  9.11,  7.87,  0.  ,  6.48,  9.49, 10.39, 13.15, 18.57,
+        11.66],
+       [15.17,  9.43, 12.08,  6.48,  0.  , 11.31, 15.17, 19.1 , 24.52,
+        17.03],
+       [10.1 ,  3.  , 16.55,  9.49, 11.31,  0.  , 18.49, 19.52, 24.52,
+        17.49],
+       [27.17, 19.05,  3.16, 10.39, 15.17, 18.49,  0.  ,  8.31, 12.04,
+        11.49],
+       [27.87, 20.35, 10.05, 13.15, 19.1 , 19.52,  8.31,  0.  ,  5.48,
+         5.74],
+       [33.03, 25.57, 14.53, 18.57, 24.52, 24.52, 12.04,  5.48,  0.  ,
+        10.05],
+       [24.37, 17.75, 11.75, 11.66, 17.03, 17.49, 11.49,  5.74, 10.05,
+         0.  ]])</code></pre>
+</div>
+</div>
+<p>Distance between 2nd object and 4th object. Please note that python’s position index start from 0, so you should use positions 1 and 3.</p>
+<div id="f96ec9dd" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>D1[<span class="dv">1</span>, <span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>np.float64(9.1104335791443)</code></pre>
+</div>
+</div>
+</section>
+<section id="standardized-euclidean-distance" class="level4" data-number="11.1.2.2">
+<h4 data-number="11.1.2.2" class="anchored" data-anchor-id="standardized-euclidean-distance"><span class="header-section-number">11.1.2.2</span> Standardized Euclidean distance</h4>
+<p>Standardize data by using <code>StandardScaler</code> from <code>sklearn.preprocessing</code> module.</p>
+<div id="6369a2d4" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>std_X <span class="op">=</span> StandardScaler().fit_transform(X)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>std_D1 <span class="op">=</span> pairwise.euclidean_distances(std_X)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>np.<span class="bu">round</span>(std_D1, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>array([[0.  , 1.01, 3.53, 2.42, 2.86, 1.13, 3.65, 3.62, 4.24, 3.61],
+       [1.01, 0.  , 2.61, 1.53, 2.15, 0.55, 2.7 , 2.9 , 3.56, 3.09],
+       [3.53, 2.61, 0.  , 1.13, 1.34, 2.92, 0.4 , 2.21, 2.85, 2.74],
+       [2.42, 1.53, 1.13, 0.  , 1.11, 1.92, 1.26, 2.06, 2.8 , 2.41],
+       [2.86, 2.15, 1.34, 1.11, 0.  , 2.61, 1.71, 3.  , 3.74, 3.27],
+       [1.13, 0.55, 2.92, 1.92, 2.61, 0.  , 2.96, 3.07, 3.66, 3.31],
+       [3.65, 2.7 , 0.4 , 1.26, 1.71, 2.96, 0.  , 1.94, 2.53, 2.56],
+       [3.62, 2.9 , 2.21, 2.06, 3.  , 3.07, 1.94, 0.  , 0.75, 0.85],
+       [4.24, 3.56, 2.85, 2.8 , 3.74, 3.66, 2.53, 0.75, 0.  , 1.11],
+       [3.61, 3.09, 2.74, 2.41, 3.27, 3.31, 2.56, 0.85, 1.11, 0.  ]])</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>StandardScaler</code> uses population variance formula instead of sample variance formula, so the results are slightly different from book example.</p>
+</div>
+</div>
+<p>Standardized distance between 2nd object and 4th object.</p>
+<div id="143834f4" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>std_D1[<span class="dv">1</span>, <span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>np.float64(1.5332230530992101)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="ex-11.3" class="level3" data-number="11.1.3">
+<h3 data-number="11.1.3" class="anchored" data-anchor-id="ex-11.3"><span class="header-section-number">11.1.3</span> Ex 11.3</h3>
+<section id="correlation-coefficients" class="level4" data-number="11.1.3.1">
+<h4 data-number="11.1.3.1" class="anchored" data-anchor-id="correlation-coefficients"><span class="header-section-number">11.1.3.1</span> Correlation coefficients</h4>
+<div id="44df3bf7" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>row_cor <span class="op">=</span> np.corrcoef(X)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>row_cor.<span class="bu">round</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>array([[1.  , 0.93, 0.68, 0.76, 0.58, 0.97, 0.71, 0.81, 0.82, 0.81],
+       [0.93, 1.  , 0.9 , 0.94, 0.83, 0.99, 0.92, 0.97, 0.97, 0.97],
+       [0.68, 0.9 , 1.  , 0.99, 0.99, 0.85, 1.  , 0.98, 0.98, 0.98],
+       [0.76, 0.94, 0.99, 1.  , 0.97, 0.9 , 1.  , 1.  , 0.99, 1.  ],
+       [0.58, 0.83, 0.99, 0.97, 1.  , 0.77, 0.98, 0.95, 0.94, 0.95],
+       [0.97, 0.99, 0.85, 0.9 , 0.77, 1.  , 0.87, 0.93, 0.94, 0.93],
+       [0.71, 0.92, 1.  , 1.  , 0.98, 0.87, 1.  , 0.99, 0.99, 0.99],
+       [0.81, 0.97, 0.98, 1.  , 0.95, 0.93, 0.99, 1.  , 1.  , 1.  ],
+       [0.82, 0.97, 0.98, 0.99, 0.94, 0.94, 0.99, 1.  , 1.  , 1.  ],
+       [0.81, 0.97, 0.98, 1.  , 0.95, 0.93, 0.99, 1.  , 1.  , 1.  ]])</code></pre>
+</div>
+</div>
+<p>Correlation coefficients between 1st object and 8th object.</p>
+<div id="3145ac7a" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>row_cor[<span class="dv">0</span>, <span class="dv">7</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>np.float64(0.8099343377536524)</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can also use cosine similarity after centering by row.</p>
+<div id="2ab4d189" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>centered_X <span class="op">=</span> X.to_numpy() <span class="op">-</span> np.mean(X, axis<span class="op">=</span><span class="dv">1</span>).to_numpy().reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>pairwise.cosine_similarity(centered_X).<span class="bu">round</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>array([[1.  , 0.93, 0.68, 0.76, 0.58, 0.97, 0.71, 0.81, 0.82, 0.81],
+       [0.93, 1.  , 0.9 , 0.94, 0.83, 0.99, 0.92, 0.97, 0.97, 0.97],
+       [0.68, 0.9 , 1.  , 0.99, 0.99, 0.85, 1.  , 0.98, 0.98, 0.98],
+       [0.76, 0.94, 0.99, 1.  , 0.97, 0.9 , 1.  , 1.  , 0.99, 1.  ],
+       [0.58, 0.83, 0.99, 0.97, 1.  , 0.77, 0.98, 0.95, 0.94, 0.95],
+       [0.97, 0.99, 0.85, 0.9 , 0.77, 1.  , 0.87, 0.93, 0.94, 0.93],
+       [0.71, 0.92, 1.  , 1.  , 0.98, 0.87, 1.  , 0.99, 0.99, 0.99],
+       [0.81, 0.97, 0.98, 1.  , 0.95, 0.93, 0.99, 1.  , 1.  , 1.  ],
+       [0.82, 0.97, 0.98, 0.99, 0.94, 0.94, 0.99, 1.  , 1.  , 1.  ],
+       [0.81, 0.97, 0.98, 1.  , 0.95, 0.93, 0.99, 1.  , 1.  , 1.  ]])</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="after-standardization" class="level4" data-number="11.1.3.2">
+<h4 data-number="11.1.3.2" class="anchored" data-anchor-id="after-standardization"><span class="header-section-number">11.1.3.2</span> After standardization</h4>
+<div id="7f0288be" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>std_row_cor <span class="op">=</span> np.corrcoef(std_X)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>std_row_cor.<span class="bu">round</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>array([[ 1.  ,  1.  , -0.67,  0.17,  0.1 ,  0.97, -0.88, -0.8 , -0.75,
+        -0.8 ],
+       [ 1.  ,  1.  , -0.67,  0.18,  0.11,  0.97, -0.87, -0.81, -0.76,
+        -0.8 ],
+       [-0.67, -0.67,  1.  ,  0.62,  0.67, -0.83,  0.94,  0.1 ,  0.01,
+         0.09],
+       [ 0.17,  0.18,  0.62,  1.  ,  1.  , -0.07,  0.32, -0.72, -0.78,
+        -0.73],
+       [ 0.1 ,  0.11,  0.67,  1.  ,  1.  , -0.13,  0.38, -0.68, -0.74,
+        -0.68],
+       [ 0.97,  0.97, -0.83, -0.07, -0.13,  1.  , -0.97, -0.64, -0.57,
+        -0.63],
+       [-0.88, -0.87,  0.94,  0.32,  0.38, -0.97,  1.  ,  0.42,  0.34,
+         0.41],
+       [-0.8 , -0.81,  0.1 , -0.72, -0.68, -0.64,  0.42,  1.  ,  1.  ,
+         1.  ],
+       [-0.75, -0.76,  0.01, -0.78, -0.74, -0.57,  0.34,  1.  ,  1.  ,
+         1.  ],
+       [-0.8 , -0.8 ,  0.09, -0.73, -0.68, -0.63,  0.41,  1.  ,  1.  ,
+         1.  ]])</code></pre>
+</div>
+</div>
+<p>Correlation coefficients between 1st object and 8th object after standardization.</p>
+<div id="8261e226" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>std_row_cor[<span class="dv">0</span>, <span class="dv">7</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>np.float64(-0.8006555578549494)</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="example-11.4" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="example-11.4"><span class="header-section-number">11.2</span> Example 11.4</h2>
+<section id="load-data-1" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="load-data-1"><span class="header-section-number">11.2.1</span> Load data</h3>
+<div id="9356a0e9" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/ch11_dat2.csv"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+<div>
 
 
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">x1</th>
+<th data-quarto-table-cell-role="th">x2</th>
+<th data-quarto-table-cell-role="th">x3</th>
+<th data-quarto-table-cell-role="th">x4</th>
+<th data-quarto-table-cell-role="th">x5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="jaccard-index" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="jaccard-index"><span class="header-section-number">11.2.2</span> Jaccard index</h3>
+<div id="f5526f74" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>jaccard_sim <span class="op">=</span> np.eye(<span class="bu">len</span>(df))</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(df) <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i <span class="op">+</span> <span class="dv">1</span>, <span class="bu">len</span>(df)):</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    jaccard_sim[i, j] <span class="op">=</span> jaccard_score(df.loc[i], df.loc[j])</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    jaccard_sim[j, i] <span class="op">=</span> jaccard_sim[i, j]</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>jaccard_sim</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>array([[1. , 0.5, 0.2],
+       [0.5, 1. , 0. ],
+       [0.2, 0. , 1. ]])</code></pre>
+</div>
+</div>
+
+
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -643,11 +937,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./ch10_ensemble.html" class="pagination-link" aria-label="Ensemble">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Ensemble</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ch02_regression.html" class="pagination-link" aria-label="Regression">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Regression</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

@@ -206,6 +206,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Ensemble</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch11_cluster.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Cluster analysis</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -256,7 +262,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="a6f4006a" class="cell" data-execution_count="1">
+<div id="38bd1855" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -265,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="2.1" class="anchored" data-anchor-id="examples-2.3---2.5-2.7-2.10---2.11"><span class="header-section-number">2.1</span> Examples 2.3 - 2.5, 2.7, 2.10 - 2.11</h2>
 <section id="load-data" class="level3" data-number="2.1.1">
 <h3 data-number="2.1.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">2.1.1</span> Load data</h3>
-<div id="8e3c4388" class="cell" data-execution_count="2">
+<div id="86287489" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat1 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch2_reg1.csv"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># print data</span></span>
@@ -367,15 +373,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="ex-2.3-regression-coefficient" class="level3" data-number="2.1.2">
 <h3 data-number="2.1.2" class="anchored" data-anchor-id="ex-2.3-regression-coefficient"><span class="header-section-number">2.1.2</span> Ex 2.3: Regression coefficient</h3>
 <p>Define a linear regression model with <code>smf.ols()</code> by passing formula string and training data as arguments.</p>
-<div id="919a1042" class="cell" data-execution_count="3">
+<div id="91b6b16b" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> smf.ols(<span class="st">"weight ~ age + height"</span>, data <span class="op">=</span> dat1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Estimate the model by calling <code>fit()</code> method.</p>
-<div id="0c5ec6da" class="cell" data-execution_count="4">
+<div id="69d9d41f" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model_fit <span class="op">=</span> model.fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s see a summary of model estimation results.</p>
-<div id="6d90f954" class="cell" data-execution_count="5">
+<div id="cdd33fff" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model_fit.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>/opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/scipy/stats/_axis_nan_policy.py:531: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=10
@@ -406,13 +412,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Date:</td>
-<td>Thu, 11 Jul 2024</td>
+<td>Sun, 14 Jul 2024</td>
 <td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
 <td>0.00239</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Time:</td>
-<td>23:12:33</td>
+<td>17:06:13</td>
 <td data-quarto-table-cell-role="th">Log-Likelihood:</td>
 <td>-22.163</td>
 </tr>
@@ -515,7 +521,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Coefficient estimates can be accessed with <code>params</code> attribute.</p>
-<div id="cb4186cf" class="cell" data-execution_count="6">
+<div id="1cbcde35" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>model_fit.params</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>Intercept   -108.167199
@@ -528,7 +534,7 @@ dtype: float64</code></pre>
 <section id="ex-2.4-variance-of-error-terms" class="level3" data-number="2.1.3">
 <h3 data-number="2.1.3" class="anchored" data-anchor-id="ex-2.4-variance-of-error-terms"><span class="header-section-number">2.1.3</span> Ex 2.4: Variance of error terms</h3>
 <p><code>scale</code> attribute represents the estimate of error variance.</p>
-<div id="fa4a540f" class="cell" data-execution_count="7">
+<div id="e96fd429" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>model_fit.scale</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>np.float64(7.038464456795462)</code></pre>
@@ -538,7 +544,7 @@ dtype: float64</code></pre>
 <section id="ex-2.5-test-a-model" class="level3" data-number="2.1.4">
 <h3 data-number="2.1.4" class="anchored" data-anchor-id="ex-2.5-test-a-model"><span class="header-section-number">2.1.4</span> Ex 2.5: Test a model</h3>
 <p>Use <code>anova_lm()</code> from <code>statsmodels.api.stats</code> module and pass the fitted linear regression model to conduct ANOVA test.</p>
-<div id="e8a6c9ab" class="cell" data-execution_count="8">
+<div id="2ade9445" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sm.stats.anova_lm(model_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
@@ -592,7 +598,7 @@ dtype: float64</code></pre>
 <section id="ex-2.7-test-regression-coefficients" class="level3" data-number="2.1.5">
 <h3 data-number="2.1.5" class="anchored" data-anchor-id="ex-2.7-test-regression-coefficients"><span class="header-section-number">2.1.5</span> Ex 2.7 Test regression coefficients</h3>
 <p>One of tables from <code>summary()</code> output represents coefficient-level statistics including t-test statstics.</p>
-<div id="2088f6bd" class="cell" data-execution_count="9">
+<div id="eab1df68" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model_fit.summary().tables[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>/opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/scipy/stats/_axis_nan_policy.py:531: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=10
@@ -647,7 +653,7 @@ dtype: float64</code></pre>
 <section id="ex-2.10---2.11-mean-prediction-confidence-interval-and-prediction-interval" class="level3" data-number="2.1.6">
 <h3 data-number="2.1.6" class="anchored" data-anchor-id="ex-2.10---2.11-mean-prediction-confidence-interval-and-prediction-interval"><span class="header-section-number">2.1.6</span> Ex 2.10 - 2.11 Mean prediction, confidence interval and prediction interval</h3>
 <p>Variance-covariance matrix of coefficients:</p>
-<div id="07f18b83" class="cell" data-execution_count="10">
+<div id="0cfa8fb4" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>model_fit.cov_params()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
@@ -690,11 +696,11 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>Create new data to predict:</p>
-<div id="a45c824e" class="cell" data-execution_count="11">
+<div id="05278df2" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>newdata <span class="op">=</span> pd.DataFrame({<span class="st">'age'</span>: [<span class="dv">40</span>, ], <span class="st">'height'</span>: [<span class="dv">170</span>, ]})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Predict mean response by calling <code>predict()</code> method.</p>
-<div id="24a35b7c" class="cell" data-execution_count="12">
+<div id="863d89cd" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>model_fit.predict(newdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>0    67.397178
@@ -702,11 +708,11 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>Let’s also get 95% confidence interval of mean response and 95% prediction interval. To do so, first let’s produce a prediction object by calling <code>get_prediction()</code> method.</p>
-<div id="3eb24a93" class="cell" data-execution_count="13">
+<div id="3fff67dc" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>prediction_results <span class="op">=</span> model_fit.get_prediction(newdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>summary_frame()</code> method produces data frame that include mean prediction, confidence interval, and prediction interval. To compute 95% confidence/prediction intervals, pass <code>alpha=0.95</code> as an argument.</p>
-<div id="161ec7c4" class="cell" data-execution_count="14">
+<div id="723b8b4b" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>prediction_results.summary_frame(alpha<span class="op">=</span><span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <div>
@@ -748,7 +754,7 @@ dtype: float64</code></pre>
 <h2 data-number="2.2" class="anchored" data-anchor-id="example-2.14-2.16"><span class="header-section-number">2.2</span> Example 2.14, 2.16</h2>
 <section id="load-data-1" class="level3" data-number="2.2.1">
 <h3 data-number="2.2.1" class="anchored" data-anchor-id="load-data-1"><span class="header-section-number">2.2.1</span> Load data</h3>
-<div id="592c1efa" class="cell" data-execution_count="15">
+<div id="fb2c435b" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dat1 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch2_coil.csv"</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>dat1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
@@ -837,11 +843,11 @@ dtype: float64</code></pre>
 <section id="ex-2.14-estimate-a-model-with-an-indicator-variable" class="level3" data-number="2.2.2">
 <h3 data-number="2.2.2" class="anchored" data-anchor-id="ex-2.14-estimate-a-model-with-an-indicator-variable"><span class="header-section-number">2.2.2</span> Ex 2.14: Estimate a model with an indicator variable</h3>
 <p>Using <code>C()</code> inside a formula means that the variable will be considered as a categorical variable. In such case, dummy variables are automatically created during the process of model estimation. Inside <code>C()</code>, you can pass the second argument <code>Treatment(reference=6)</code> to specify <code>6</code> as a base category, so the dummy variable value is <code>0</code> when original variable value is <code>6</code>.</p>
-<div id="1a1b0547" class="cell" data-execution_count="16">
+<div id="3b493347" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>model_fit <span class="op">=</span> smf.ols(<span class="st">"y ~ temp + C(thick, Treatment(reference=6))"</span>, data<span class="op">=</span>dat1).fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s check the estimated regression coefficients.</p>
-<div id="f564456e" class="cell" data-execution_count="17">
+<div id="3ce60297" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>model_fit.summary().tables[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>/opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/scipy/stats/_axis_nan_policy.py:531: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=10
@@ -896,7 +902,7 @@ dtype: float64</code></pre>
 <section id="ex-2.16-interaction-term" class="level3" data-number="2.2.3">
 <h3 data-number="2.2.3" class="anchored" data-anchor-id="ex-2.16-interaction-term"><span class="header-section-number">2.2.3</span> Ex 2.16: Interaction term</h3>
 <p>Use <code>*</code> to estimate not only main effects but only interactions.</p>
-<div id="32a1d5da" class="cell" data-execution_count="18">
+<div id="b02fd538" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>model_fit <span class="op">=</span> smf.ols(<span class="st">"y ~ temp*C(thick, Treatment(reference=6))"</span>, data<span class="op">=</span>dat1).fit()</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>model_fit.summary().tables[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
