@@ -16,6 +16,7 @@ book:
     - ch08_tree.qmd
     - ch09_svm.qmd
     - ch10_ensemble.qmd
+    - ch11_cluster.qmd
   repo-url: https://github.com/youngroklee-ml/data-mining-python
 
 format:
