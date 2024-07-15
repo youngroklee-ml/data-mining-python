@@ -230,6 +230,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cluster validation</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ch15_association_rule.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Association rules</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -284,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="c4762c0d" class="cell" data-execution_count="1">
+<div id="cd3fe973" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -297,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="10.1" class="anchored" data-anchor-id="example-10.2---10.3"><span class="header-section-number">10.1</span> Example 10.2 - 10.3</h2>
 <section id="load-data" class="level3" data-number="10.1.1">
 <h3 data-number="10.1.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">10.1.1</span> Load data</h3>
-<div id="fba56fb2" class="cell" data-execution_count="2">
+<div id="fc79c144" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> pd.read_csv(<span class="st">"data/ch10_dat1.csv"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> OneHotEncoder().fit_transform(dat[[<span class="st">'X1'</span>, <span class="st">'X2'</span>, <span class="st">'X3'</span>, <span class="st">'X4'</span>]])</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>enc <span class="op">=</span> LabelBinarizer().fit(dat[<span class="st">'Y'</span>])</span>
@@ -306,7 +312,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="ex-10.2-train-random-forest-classifier" class="level3" data-number="10.1.2">
 <h3 data-number="10.1.2" class="anchored" data-anchor-id="ex-10.2-train-random-forest-classifier"><span class="header-section-number">10.1.2</span> Ex 10.2: Train random forest classifier</h3>
-<div id="42bf41de" class="cell" data-execution_count="3">
+<div id="365291fb" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rf <span class="op">=</span> RandomForestClassifier(n_estimators<span class="op">=</span><span class="dv">4</span>, oob_score<span class="op">=</span><span class="va">True</span>, random_state<span class="op">=</span><span class="dv">3280612</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>rf.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
@@ -718,7 +724,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>Visualize each tree in the random forest.</p>
-<div id="2690ac12" class="cell" data-execution_count="4">
+<div id="e5389f5d" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> m <span class="kw">in</span> rf.estimators_:</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  plot_tree(m)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -755,7 +761,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <section id="ex-10.3-oob-prediction" class="level3" data-number="10.1.3">
 <h3 data-number="10.1.3" class="anchored" data-anchor-id="ex-10.3-oob-prediction"><span class="header-section-number">10.1.3</span> Ex 10.3: OOB prediction</h3>
 <p>Out-of-bag probability prediction:</p>
-<div id="0671097a" class="cell" data-execution_count="5">
+<div id="385f5cfe" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rf.oob_decision_function_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>array([[1.  , 0.  ],
@@ -765,7 +771,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
        [0.  , 1.  ]])</code></pre>
 </div>
 </div>
-<div id="c1a64aba" class="cell" data-execution_count="6">
+<div id="309053fa" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>y_oob <span class="op">=</span> np.argmax(rf.oob_decision_function_, axis <span class="op">=</span> <span class="dv">1</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>y_oob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
@@ -773,7 +779,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>Confusion matrix on OOB prediction:</p>
-<div id="663c51ba" class="cell" data-execution_count="7">
+<div id="9b64993a" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>confusion_matrix(y, y_oob)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>array([[0, 3],
@@ -786,7 +792,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <h2 data-number="10.2" class="anchored" data-anchor-id="example-10.5"><span class="header-section-number">10.2</span> Example 10.5</h2>
 <section id="load-data-1" class="level3" data-number="10.2.1">
 <h3 data-number="10.2.1" class="anchored" data-anchor-id="load-data-1"><span class="header-section-number">10.2.1</span> Load data</h3>
-<div id="c43dca21" class="cell" data-execution_count="8">
+<div id="53d40785" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> pd.read_csv(<span class="st">"data/ch10_dat3.csv"</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat[[<span class="st">'X'</span>]]</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> dat[<span class="st">'Y'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -794,10 +800,10 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </section>
 <section id="estimate-gbm" class="level3" data-number="10.2.2">
 <h3 data-number="10.2.2" class="anchored" data-anchor-id="estimate-gbm"><span class="header-section-number">10.2.2</span> Estimate GBM</h3>
-<div id="d478514c" class="cell" data-execution_count="9">
+<div id="4e8cddd7" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>gbm_model <span class="op">=</span> GradientBoostingRegressor(n_estimators<span class="op">=</span><span class="dv">5</span>, max_depth<span class="op">=</span><span class="dv">1</span>, learning_rate<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="e4ee526c" class="cell" data-execution_count="10">
+<div id="cf3105ce" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>gbm_model.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <style>#sk-container-id-2 {
@@ -1210,11 +1216,11 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </section>
 <section id="visualize-function" class="level3" data-number="10.2.3">
 <h3 data-number="10.2.3" class="anchored" data-anchor-id="visualize-function"><span class="header-section-number">10.2.3</span> Visualize function</h3>
-<div id="096993ab" class="cell" data-execution_count="11">
+<div id="62ddbbfe" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>X_new <span class="op">=</span> pd.DataFrame.from_dict({<span class="st">'X'</span>: np.arange(start<span class="op">=-</span><span class="dv">5</span>, stop<span class="op">=</span><span class="dv">5</span>, step<span class="op">=</span><span class="fl">0.01</span>)})</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> gbm_model.predict(X_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="f7052ce1" class="cell" data-execution_count="12">
+<div id="34cecbb3" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(X, y)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>plt.plot(X_new, y_pred, color<span class="op">=</span><span class="st">'orange'</span>)</span>
@@ -1233,7 +1239,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <h2 data-number="10.3" class="anchored" data-anchor-id="example-10.6"><span class="header-section-number">10.3</span> Example 10.6</h2>
 <section id="load-data-2" class="level3" data-number="10.3.1">
 <h3 data-number="10.3.1" class="anchored" data-anchor-id="load-data-2"><span class="header-section-number">10.3.1</span> Load data</h3>
-<div id="6bf4673f" class="cell" data-execution_count="13">
+<div id="9f4d0537" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> pd.read_csv(<span class="st">"data/ch8_dat1.csv"</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat[[<span class="st">'x1'</span>, <span class="st">'x2'</span>]]</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> LabelBinarizer().fit_transform(dat[<span class="st">'class'</span>]).ravel()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1242,7 +1248,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <section id="small-gbm-classifier" class="level3" data-number="10.3.2">
 <h3 data-number="10.3.2" class="anchored" data-anchor-id="small-gbm-classifier"><span class="header-section-number">10.3.2</span> Small GBM Classifier</h3>
 <p>Let us use only two trees (i.e.&nbsp;<code>n_estimator = 2</code>)</p>
-<div id="25e14c9d" class="cell" data-execution_count="14">
+<div id="bf1b4d95" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>gbm_model <span class="op">=</span> GradientBoostingClassifier(n_estimators<span class="op">=</span><span class="dv">2</span>, max_depth<span class="op">=</span><span class="dv">1</span>, learning_rate<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>gbm_model.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
@@ -1657,7 +1663,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <section id="prediction" class="level3" data-number="10.3.3">
 <h3 data-number="10.3.3" class="anchored" data-anchor-id="prediction"><span class="header-section-number">10.3.3</span> Prediction</h3>
 <p>Posterior:</p>
-<div id="3f882ede" class="cell" data-execution_count="15">
+<div id="d9aeb5a4" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>y_posterior <span class="op">=</span> gbm_model.predict_proba(X)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>y_posterior</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
@@ -1674,7 +1680,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>Area under the ROC curve:</p>
-<div id="d81b17e2" class="cell" data-execution_count="16">
+<div id="ae718871" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>roc_auc_score(y, y_posterior[:, <span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>np.float64(0.9)</code></pre>
@@ -1684,7 +1690,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <section id="larger-model" class="level3" data-number="10.3.4">
 <h3 data-number="10.3.4" class="anchored" data-anchor-id="larger-model"><span class="header-section-number">10.3.4</span> Larger model</h3>
 <p>Let us increase number of trees, while reducing step size:</p>
-<div id="1ce98b14" class="cell" data-execution_count="17">
+<div id="5a8cb649" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>gbm_model <span class="op">=</span> GradientBoostingClassifier(n_estimators<span class="op">=</span><span class="dv">100</span>, max_depth<span class="op">=</span><span class="dv">1</span>, learning_rate<span class="op">=</span><span class="fl">0.1</span>)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>gbm_model.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
@@ -2096,7 +2102,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>Posterior:</p>
-<div id="e6e7deaf" class="cell" data-execution_count="18">
+<div id="2459da63" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>y_posterior <span class="op">=</span> gbm_model.predict_proba(X)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>y_posterior</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
@@ -2113,7 +2119,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>AUC:</p>
-<div id="729087d5" class="cell" data-execution_count="19">
+<div id="f2d2d5c9" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>roc_auc_score(y, y_posterior[:, <span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>np.float64(1.0)</code></pre>

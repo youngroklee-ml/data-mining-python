@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Mining with Python - 14&nbsp; Cluster validation</title>
+<title>Data Mining with Python - 15&nbsp; Association rules</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ch15_association_rule.html" rel="next">
-<link href="./ch13_nonhierarchical_clustering.html" rel="prev">
+<link href="./ch14_cluster_validation.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -118,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch14_cluster_validation.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cluster validation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch15_association_rule.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Association rules</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -226,13 +225,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch14_cluster_validation.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ch14_cluster_validation.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cluster validation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ch15_association_rule.html" class="sidebar-item-text sidebar-link">
+  <a href="./ch15_association_rule.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Association rules</span></span></a>
   </div>
 </li>
@@ -246,25 +245,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#examples-14.1-14.3" id="toc-examples-14.1-14.3" class="nav-link active" data-scroll-target="#examples-14.1-14.3"><span class="header-section-number">14.1</span> Examples 14.1, 14.3</a>
+  <li><a href="#examples-15.3---15.4" id="toc-examples-15.3---15.4" class="nav-link active" data-scroll-target="#examples-15.3---15.4"><span class="header-section-number">15.1</span> Examples 15.3 - 15.4</a>
   <ul class="collapse">
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">14.1.1</span> Data</a></li>
-  <li><a href="#ex-14.1-rand-index" id="toc-ex-14.1-rand-index" class="nav-link" data-scroll-target="#ex-14.1-rand-index"><span class="header-section-number">14.1.2</span> Ex 14.1 Rand index</a></li>
-  <li><a href="#ex-14.3-adjusted-rand-index" id="toc-ex-14.3-adjusted-rand-index" class="nav-link" data-scroll-target="#ex-14.3-adjusted-rand-index"><span class="header-section-number">14.1.3</span> Ex 14.3 Adjusted Rand index</a></li>
-  </ul></li>
-  <li><a href="#example-14.4" id="toc-example-14.4" class="nav-link" data-scroll-target="#example-14.4"><span class="header-section-number">14.2</span> Example 14.4</a>
-  <ul class="collapse">
-  <li><a href="#data-1" id="toc-data-1" class="nav-link" data-scroll-target="#data-1"><span class="header-section-number">14.2.1</span> Data</a></li>
-  <li><a href="#rand-index" id="toc-rand-index" class="nav-link" data-scroll-target="#rand-index"><span class="header-section-number">14.2.2</span> Rand index</a></li>
-  <li><a href="#adjusted-rand-index" id="toc-adjusted-rand-index" class="nav-link" data-scroll-target="#adjusted-rand-index"><span class="header-section-number">14.2.3</span> Adjusted Rand index</a></li>
-  </ul></li>
-  <li><a href="#example-14.5" id="toc-example-14.5" class="nav-link" data-scroll-target="#example-14.5"><span class="header-section-number">14.3</span> Example 14.5</a>
-  <ul class="collapse">
-  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data"><span class="header-section-number">14.3.1</span> Load data</a></li>
-  <li><a href="#cluster-solutions" id="toc-cluster-solutions" class="nav-link" data-scroll-target="#cluster-solutions"><span class="header-section-number">14.3.2</span> Cluster solutions</a></li>
-  <li><a href="#calinski-harabasz-index" id="toc-calinski-harabasz-index" class="nav-link" data-scroll-target="#calinski-harabasz-index"><span class="header-section-number">14.3.3</span> Calinski-Harabasz index</a></li>
-  <li><a href="#average-silhouette-width" id="toc-average-silhouette-width" class="nav-link" data-scroll-target="#average-silhouette-width"><span class="header-section-number">14.3.4</span> Average silhouette width</a></li>
-  <li><a href="#silhouette-for-each-sample" id="toc-silhouette-for-each-sample" class="nav-link" data-scroll-target="#silhouette-for-each-sample"><span class="header-section-number">14.3.5</span> Silhouette for each sample</a></li>
+  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data"><span class="header-section-number">15.1.1</span> Load data</a></li>
+  <li><a href="#encode-transaction-data" id="toc-encode-transaction-data" class="nav-link" data-scroll-target="#encode-transaction-data"><span class="header-section-number">15.1.2</span> Encode transaction data</a></li>
+  <li><a href="#ex-15.3-frequent-items" id="toc-ex-15.3-frequent-items" class="nav-link" data-scroll-target="#ex-15.3-frequent-items"><span class="header-section-number">15.1.3</span> Ex 15.3: Frequent items</a></li>
+  <li><a href="#ex-15.4-association-rules" id="toc-ex-15.4-association-rules" class="nav-link" data-scroll-target="#ex-15.4-association-rules"><span class="header-section-number">15.1.4</span> Ex 15.4: Association rules</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -274,7 +260,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cluster validation</span></h1>
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Association rules</span></h1>
 </div>
 
 
@@ -291,123 +277,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="0cd2a1a1" class="cell" data-execution_count="1">
+<p>Use <a href="https://rasbt.github.io/mlxtend/">mlxtend</a> library.</p>
+<div id="4c9f9b39" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  rand_score, adjusted_rand_score, </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  silhouette_samples, silhouette_score, </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  calinski_harabasz_score</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mlxtend.preprocessing <span class="im">import</span> TransactionEncoder</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mlxtend.frequent_patterns <span class="im">import</span> apriori, association_rules</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="examples-14.1-14.3" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="examples-14.1-14.3"><span class="header-section-number">14.1</span> Examples 14.1, 14.3</h2>
-<section id="data" class="level3" data-number="14.1.1">
-<h3 data-number="14.1.1" class="anchored" data-anchor-id="data"><span class="header-section-number">14.1.1</span> Data</h3>
-<div id="a24711b7" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sol1 <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>])</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sol2 <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="examples-15.3---15.4" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="examples-15.3---15.4"><span class="header-section-number">15.1</span> Examples 15.3 - 15.4</h2>
+<section id="load-data" class="level3" data-number="15.1.1">
+<h3 data-number="15.1.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">15.1.1</span> Load data</h3>
+<div id="f028fbcf" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/ch15_transaction.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df.groupby(<span class="st">'id'</span>)[<span class="st">'item'</span>].<span class="bu">apply</span>(<span class="bu">list</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>id
+1          [b, c, g]
+2    [a, b, d, e, f]
+3       [a, b, c, g]
+4       [b, c, e, f]
+5    [b, c, e, f, g]
+Name: item, dtype: object</code></pre>
+</div>
 </div>
 </section>
-<section id="ex-14.1-rand-index" class="level3" data-number="14.1.2">
-<h3 data-number="14.1.2" class="anchored" data-anchor-id="ex-14.1-rand-index"><span class="header-section-number">14.1.2</span> Ex 14.1 Rand index</h3>
-<div id="1ec88477" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rand_score(sol1, sol2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="encode-transaction-data" class="level3" data-number="15.1.2">
+<h3 data-number="15.1.2" class="anchored" data-anchor-id="encode-transaction-data"><span class="header-section-number">15.1.2</span> Encode transaction data</h3>
+<p>Transform a list of transactions (i.e.&nbsp;a list of list of items) to a data frame that a row represents a transaction and a column represents an item.</p>
+<div id="a32fcc28" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>enc <span class="op">=</span> TransactionEncoder()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>X_transformed <span class="op">=</span> enc.fit_transform(X)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df_transformed <span class="op">=</span> pd.DataFrame(X_transformed, columns<span class="op">=</span>enc.columns_)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df_transformed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>np.float64(0.7142857142857143)</code></pre>
-</div>
-</div>
-</section>
-<section id="ex-14.3-adjusted-rand-index" class="level3" data-number="14.1.3">
-<h3 data-number="14.1.3" class="anchored" data-anchor-id="ex-14.3-adjusted-rand-index"><span class="header-section-number">14.1.3</span> Ex 14.3 Adjusted Rand index</h3>
-<div id="1464193e" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>adjusted_rand_score(sol1, sol2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>0.2125</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="example-14.4" class="level2" data-number="14.2">
-<h2 data-number="14.2" class="anchored" data-anchor-id="example-14.4"><span class="header-section-number">14.2</span> Example 14.4</h2>
-<section id="data-1" class="level3" data-number="14.2.1">
-<h3 data-number="14.2.1" class="anchored" data-anchor-id="data-1"><span class="header-section-number">14.2.1</span> Data</h3>
-<div id="47d25339" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sol1 <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>])</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sol2 <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="rand-index" class="level3" data-number="14.2.2">
-<h3 data-number="14.2.2" class="anchored" data-anchor-id="rand-index"><span class="header-section-number">14.2.2</span> Rand index</h3>
-<div id="49a36ab7" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>rand_score(sol1, sol2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>np.float64(0.5111111111111111)</code></pre>
-</div>
-</div>
-</section>
-<section id="adjusted-rand-index" class="level3" data-number="14.2.3">
-<h3 data-number="14.2.3" class="anchored" data-anchor-id="adjusted-rand-index"><span class="header-section-number">14.2.3</span> Adjusted Rand index</h3>
-<div id="dfc8c1c7" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>adjusted_rand_score(sol1, sol2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>-0.25</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="example-14.5" class="level2" data-number="14.3">
-<h2 data-number="14.3" class="anchored" data-anchor-id="example-14.5"><span class="header-section-number">14.3</span> Example 14.5</h2>
-<section id="load-data" class="level3" data-number="14.3.1">
-<h3 data-number="14.3.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">14.3.1</span> Load data</h3>
-<div id="9934f114" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/ch14_dat1.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="cluster-solutions" class="level3" data-number="14.3.2">
-<h3 data-number="14.3.2" class="anchored" data-anchor-id="cluster-solutions"><span class="header-section-number">14.3.2</span> Cluster solutions</h3>
-<div id="161e29e2" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sol1 <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>sol2 <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="calinski-harabasz-index" class="level3" data-number="14.3.3">
-<h3 data-number="14.3.3" class="anchored" data-anchor-id="calinski-harabasz-index"><span class="header-section-number">14.3.3</span> Calinski-Harabasz index</h3>
-<div id="760f7c2e" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>calinski_harabasz_score(df, sol1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>np.float64(26.450289575289577)</code></pre>
-</div>
-</div>
-<div id="e1d3584e" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>calinski_harabasz_score(df, sol2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>np.float64(15.362179487179493)</code></pre>
-</div>
-</div>
-</section>
-<section id="average-silhouette-width" class="level3" data-number="14.3.4">
-<h3 data-number="14.3.4" class="anchored" data-anchor-id="average-silhouette-width"><span class="header-section-number">14.3.4</span> Average silhouette width</h3>
-<div id="15bfe88a" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>silhouette_score(df, sol1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>np.float64(0.6507364311718348)</code></pre>
-</div>
-</div>
-<div id="a1a1dcf0" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>silhouette_score(df, sol2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
-<pre><code>np.float64(0.5864225849318143)</code></pre>
-</div>
-</div>
-</section>
-<section id="silhouette-for-each-sample" class="level3" data-number="14.3.5">
-<h3 data-number="14.3.5" class="anchored" data-anchor-id="silhouette-for-each-sample"><span class="header-section-number">14.3.5</span> Silhouette for each sample</h3>
-<div id="cc3ca55f" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df.assign(</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  silhouetee <span class="op">=</span> silhouette_samples(df, sol1)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 <div>
 
@@ -416,59 +320,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">x1</th>
-<th data-quarto-table-cell-role="th">x2</th>
-<th data-quarto-table-cell-role="th">silhouetee</th>
+<th data-quarto-table-cell-role="th">a</th>
+<th data-quarto-table-cell-role="th">b</th>
+<th data-quarto-table-cell-role="th">c</th>
+<th data-quarto-table-cell-role="th">d</th>
+<th data-quarto-table-cell-role="th">e</th>
+<th data-quarto-table-cell-role="th">f</th>
+<th data-quarto-table-cell-role="th">g</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>4</td>
-<td>15</td>
-<td>0.734391</td>
+<td>False</td>
+<td>True</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>20</td>
-<td>13</td>
-<td>0.607345</td>
+<td>True</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+<td>True</td>
+<td>True</td>
+<td>False</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
-<td>3</td>
-<td>13</td>
-<td>0.759792</td>
+<td>True</td>
+<td>True</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
-<td>19</td>
-<td>4</td>
-<td>0.777935</td>
+<td>False</td>
+<td>True</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+<td>True</td>
+<td>False</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
-<td>17</td>
-<td>17</td>
-<td>0.570831</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
-<td>8</td>
-<td>11</td>
-<td>0.513246</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
-<td>19</td>
-<td>12</td>
-<td>0.517184</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
-<td>18</td>
-<td>6</td>
-<td>0.725166</td>
+<td>False</td>
+<td>True</td>
+<td>True</td>
+<td>False</td>
+<td>True</td>
+<td>True</td>
+<td>True</td>
 </tr>
 </tbody>
 </table>
@@ -477,11 +387,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="4c90df91" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df.assign(</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  silhouetee <span class="op">=</span> silhouette_samples(df, sol2)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+</section>
+<section id="ex-15.3-frequent-items" class="level3" data-number="15.1.3">
+<h3 data-number="15.1.3" class="anchored" data-anchor-id="ex-15.3-frequent-items"><span class="header-section-number">15.1.3</span> Ex 15.3: Frequent items</h3>
+<p>Use <code>apriori()</code> from <code>mlxtend.frequent_patterns</code> module.</p>
+<div id="0bf2d6aa" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>frequent_items <span class="op">=</span> apriori(df_transformed, min_support<span class="op">=</span><span class="fl">0.4</span>, use_colnames<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>frequent_items</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
 <div>
 <div>
 
@@ -490,59 +403,528 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">x1</th>
-<th data-quarto-table-cell-role="th">x2</th>
-<th data-quarto-table-cell-role="th">silhouetee</th>
+<th data-quarto-table-cell-role="th">support</th>
+<th data-quarto-table-cell-role="th">itemsets</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>4</td>
-<td>15</td>
-<td>0.752787</td>
+<td>0.4</td>
+<td>(a)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>20</td>
-<td>13</td>
-<td>0.623266</td>
+<td>1.0</td>
+<td>(b)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
-<td>3</td>
-<td>13</td>
-<td>0.769059</td>
+<td>0.8</td>
+<td>(c)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
-<td>19</td>
-<td>4</td>
-<td>0.513305</td>
+<td>0.6</td>
+<td>(e)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
-<td>17</td>
-<td>17</td>
-<td>0.326817</td>
+<td>0.6</td>
+<td>(f)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">5</td>
-<td>8</td>
-<td>11</td>
-<td>0.526063</td>
+<td>0.6</td>
+<td>(g)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">6</td>
-<td>19</td>
-<td>12</td>
-<td>0.630393</td>
+<td>0.4</td>
+<td>(b, a)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">7</td>
-<td>18</td>
-<td>6</td>
-<td>0.549690</td>
+<td>0.8</td>
+<td>(b, c)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>0.6</td>
+<td>(e, b)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>0.6</td>
+<td>(b, f)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>0.6</td>
+<td>(b, g)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>0.4</td>
+<td>(e, c)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>0.4</td>
+<td>(c, f)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>0.6</td>
+<td>(g, c)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>0.6</td>
+<td>(e, f)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>0.4</td>
+<td>(e, b, c)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>0.4</td>
+<td>(b, c, f)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>0.6</td>
+<td>(g, b, c)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>0.6</td>
+<td>(e, b, f)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>0.4</td>
+<td>(e, c, f)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">20</td>
+<td>0.4</td>
+<td>(e, b, c, f)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ex-15.4-association-rules" class="level3" data-number="15.1.4">
+<h3 data-number="15.1.4" class="anchored" data-anchor-id="ex-15.4-association-rules"><span class="header-section-number">15.1.4</span> Ex 15.4: Association rules</h3>
+<p>Use <code>association_rules()</code> from <code>mlxtend.frequent_patterns</code> module.</p>
+<div id="005283af" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rules <span class="op">=</span> association_rules(frequent_items, metric<span class="op">=</span><span class="st">'confidence'</span>, min_threshold<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rules</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">antecedents</th>
+<th data-quarto-table-cell-role="th">consequents</th>
+<th data-quarto-table-cell-role="th">antecedent support</th>
+<th data-quarto-table-cell-role="th">consequent support</th>
+<th data-quarto-table-cell-role="th">support</th>
+<th data-quarto-table-cell-role="th">confidence</th>
+<th data-quarto-table-cell-role="th">lift</th>
+<th data-quarto-table-cell-role="th">leverage</th>
+<th data-quarto-table-cell-role="th">conviction</th>
+<th data-quarto-table-cell-role="th">zhangs_metric</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>(a)</td>
+<td>(b)</td>
+<td>0.4</td>
+<td>1.0</td>
+<td>0.4</td>
+<td>1.00</td>
+<td>1.000000</td>
+<td>0.00</td>
+<td>inf</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>(b)</td>
+<td>(c)</td>
+<td>1.0</td>
+<td>0.8</td>
+<td>0.8</td>
+<td>0.80</td>
+<td>1.000000</td>
+<td>0.00</td>
+<td>1.0</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>(c)</td>
+<td>(b)</td>
+<td>0.8</td>
+<td>1.0</td>
+<td>0.8</td>
+<td>1.00</td>
+<td>1.000000</td>
+<td>0.00</td>
+<td>inf</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>(e)</td>
+<td>(b)</td>
+<td>0.6</td>
+<td>1.0</td>
+<td>0.6</td>
+<td>1.00</td>
+<td>1.000000</td>
+<td>0.00</td>
+<td>inf</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>(f)</td>
+<td>(b)</td>
+<td>0.6</td>
+<td>1.0</td>
+<td>0.6</td>
+<td>1.00</td>
+<td>1.000000</td>
+<td>0.00</td>
+<td>inf</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>(g)</td>
+<td>(b)</td>
+<td>0.6</td>
+<td>1.0</td>
+<td>0.6</td>
+<td>1.00</td>
+<td>1.000000</td>
+<td>0.00</td>
+<td>inf</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>(g)</td>
+<td>(c)</td>
+<td>0.6</td>
+<td>0.8</td>
+<td>0.6</td>
+<td>1.00</td>
+<td>1.250000</td>
+<td>0.12</td>
+<td>inf</td>
+<td>0.500000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>(c)</td>
+<td>(g)</td>
+<td>0.8</td>
+<td>0.6</td>
+<td>0.6</td>
+<td>0.75</td>
+<td>1.250000</td>
+<td>0.12</td>
+<td>1.6</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>(e)</td>
+<td>(f)</td>
+<td>0.6</td>
+<td>0.6</td>
+<td>0.6</td>
+<td>1.00</td>
+<td>1.666667</td>
+<td>0.24</td>
+<td>inf</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>(f)</td>
+<td>(e)</td>
+<td>0.6</td>
+<td>0.6</td>
+<td>0.6</td>
+<td>1.00</td>
+<td>1.666667</td>
+<td>0.24</td>
+<td>inf</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>(e, c)</td>
+<td>(b)</td>
+<td>0.4</td>
+<td>1.0</td>
+<td>0.4</td>
+<td>1.00</td>
+<td>1.000000</td>
+<td>0.00</td>
+<td>inf</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>(c, f)</td>
+<td>(b)</td>
+<td>0.4</td>
+<td>1.0</td>
+<td>0.4</td>
+<td>1.00</td>
+<td>1.000000</td>
+<td>0.00</td>
+<td>inf</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>(b, g)</td>
+<td>(c)</td>
+<td>0.6</td>
+<td>0.8</td>
+<td>0.6</td>
+<td>1.00</td>
+<td>1.250000</td>
+<td>0.12</td>
+<td>inf</td>
+<td>0.500000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>(c, g)</td>
+<td>(b)</td>
+<td>0.6</td>
+<td>1.0</td>
+<td>0.6</td>
+<td>1.00</td>
+<td>1.000000</td>
+<td>0.00</td>
+<td>inf</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>(b, c)</td>
+<td>(g)</td>
+<td>0.8</td>
+<td>0.6</td>
+<td>0.6</td>
+<td>0.75</td>
+<td>1.250000</td>
+<td>0.12</td>
+<td>1.6</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>(g)</td>
+<td>(b, c)</td>
+<td>0.6</td>
+<td>0.8</td>
+<td>0.6</td>
+<td>1.00</td>
+<td>1.250000</td>
+<td>0.12</td>
+<td>inf</td>
+<td>0.500000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>(c)</td>
+<td>(b, g)</td>
+<td>0.8</td>
+<td>0.6</td>
+<td>0.6</td>
+<td>0.75</td>
+<td>1.250000</td>
+<td>0.12</td>
+<td>1.6</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>(e, b)</td>
+<td>(f)</td>
+<td>0.6</td>
+<td>0.6</td>
+<td>0.6</td>
+<td>1.00</td>
+<td>1.666667</td>
+<td>0.24</td>
+<td>inf</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>(e, f)</td>
+<td>(b)</td>
+<td>0.6</td>
+<td>1.0</td>
+<td>0.6</td>
+<td>1.00</td>
+<td>1.000000</td>
+<td>0.00</td>
+<td>inf</td>
+<td>0.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>(b, f)</td>
+<td>(e)</td>
+<td>0.6</td>
+<td>0.6</td>
+<td>0.6</td>
+<td>1.00</td>
+<td>1.666667</td>
+<td>0.24</td>
+<td>inf</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">20</td>
+<td>(e)</td>
+<td>(b, f)</td>
+<td>0.6</td>
+<td>0.6</td>
+<td>0.6</td>
+<td>1.00</td>
+<td>1.666667</td>
+<td>0.24</td>
+<td>inf</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">21</td>
+<td>(f)</td>
+<td>(e, b)</td>
+<td>0.6</td>
+<td>0.6</td>
+<td>0.6</td>
+<td>1.00</td>
+<td>1.666667</td>
+<td>0.24</td>
+<td>inf</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">22</td>
+<td>(e, c)</td>
+<td>(f)</td>
+<td>0.4</td>
+<td>0.6</td>
+<td>0.4</td>
+<td>1.00</td>
+<td>1.666667</td>
+<td>0.16</td>
+<td>inf</td>
+<td>0.666667</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">23</td>
+<td>(c, f)</td>
+<td>(e)</td>
+<td>0.4</td>
+<td>0.6</td>
+<td>0.4</td>
+<td>1.00</td>
+<td>1.666667</td>
+<td>0.16</td>
+<td>inf</td>
+<td>0.666667</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">24</td>
+<td>(e, b, c)</td>
+<td>(f)</td>
+<td>0.4</td>
+<td>0.6</td>
+<td>0.4</td>
+<td>1.00</td>
+<td>1.666667</td>
+<td>0.16</td>
+<td>inf</td>
+<td>0.666667</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">25</td>
+<td>(e, c, f)</td>
+<td>(b)</td>
+<td>0.4</td>
+<td>1.0</td>
+<td>0.4</td>
+<td>1.00</td>
+<td>1.000000</td>
+<td>0.00</td>
+<td>inf</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">26</td>
+<td>(b, c, f)</td>
+<td>(e)</td>
+<td>0.4</td>
+<td>0.6</td>
+<td>0.4</td>
+<td>1.00</td>
+<td>1.666667</td>
+<td>0.16</td>
+<td>inf</td>
+<td>0.666667</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">27</td>
+<td>(e, c)</td>
+<td>(b, f)</td>
+<td>0.4</td>
+<td>0.6</td>
+<td>0.4</td>
+<td>1.00</td>
+<td>1.666667</td>
+<td>0.16</td>
+<td>inf</td>
+<td>0.666667</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">28</td>
+<td>(c, f)</td>
+<td>(e, b)</td>
+<td>0.4</td>
+<td>0.6</td>
+<td>0.4</td>
+<td>1.00</td>
+<td>1.666667</td>
+<td>0.16</td>
+<td>inf</td>
+<td>0.666667</td>
 </tr>
 </tbody>
 </table>
@@ -968,14 +1350,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ch13_nonhierarchical_clustering.html" class="pagination-link" aria-label="Non-hierarchical clustering">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Non-hierarchical clustering</span></span>
+      <a href="./ch14_cluster_validation.html" class="pagination-link" aria-label="Cluster validation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cluster validation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ch15_association_rule.html" class="pagination-link" aria-label="Association rules">
-        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Association rules</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
