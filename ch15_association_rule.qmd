@@ -1,0 +1,51 @@
+# Association rules
+
+Use [mlxtend](https://rasbt.github.io/mlxtend/) library.
+
+```{python}
+import pandas as pd
+import numpy as np
+from mlxtend.preprocessing import TransactionEncoder
+from mlxtend.frequent_patterns import apriori, association_rules
+```
+
+
+## Examples 15.3 - 15.4
+
+### Load data
+
+```{python}
+df = pd.read_csv("data/ch15_transaction.csv")
+X = df.groupby('id')['item'].apply(list)
+X
+```
+
+### Encode transaction data
+
+Transform a list of transactions (i.e. a list of list of items) to a data frame that a row represents a transaction and a column represents an item.
+
+```{python}
+enc = TransactionEncoder()
+X_transformed = enc.fit_transform(X)
+df_transformed = pd.DataFrame(X_transformed, columns=enc.columns_)
+df_transformed
+```
+
+### Ex 15.3: Frequent items
+
+Use `apriori()` from `mlxtend.frequent_patterns` module.
+
+```{python}
+frequent_items = apriori(df_transformed, min_support=0.4, use_colnames=True)
+frequent_items
+```
+
+### Ex 15.4: Association rules
+
+Use `association_rules()` from `mlxtend.frequent_patterns` module.
+
+```{python}
+rules = association_rules(frequent_items, metric='confidence', min_threshold=0.7)
+rules
+```
+

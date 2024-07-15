@@ -20,6 +20,7 @@ book:
     - ch12_hierarchical_clustering.qmd
     - ch13_nonhierarchical_clustering.qmd
     - ch14_cluster_validation.qmd
+    - ch15_association_rule.qmd
   repo-url: https://github.com/youngroklee-ml/data-mining-python
 
 format:
