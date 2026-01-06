@@ -22,12 +22,12 @@ y = LabelBinarizer(neg_label=2, pos_label=4).fit_transform(dat['class']).ravel()
 # split train data and test data
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1/3, random_state=849716)
 
-# train SVM with Gaussian kernel with sigma = 0.5
+# train SVM with Gaussian kernel with sigma = 0.1
 # See [kernel function parameterization](https://scikit-learn.org/stable/modules/svm.html#svm-kernels)
 svm_model1 = SVC(
   C=10, 
   kernel='rbf', 
-  gamma=0.5,
+  gamma=0.1,
   tol=1e-5
   )
 svm_model1.fit(X_train, y_train)
@@ -41,12 +41,12 @@ cm_test1 = confusion_matrix(y_test, svm_model1.predict(X_test))
 print(cm_test1.T)
 
 
-# train SVM with Gaussian kernel with sigma = 2
+# train SVM with Gaussian kernel with sigma = 0.5
 # See [kernel function parameterization](https://scikit-learn.org/stable/modules/svm.html#svm-kernels)
 svm_model2 = SVC(
   C=10, 
   kernel='rbf', 
-  gamma=2,
+  gamma=0.5,
   tol=1e-5
   )
 svm_model2.fit(X_train, y_train)
