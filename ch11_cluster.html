@@ -282,7 +282,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="61c3dd1a" class="cell" data-execution_count="1">
+<div id="facba10f" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> pairwise</span>
@@ -293,7 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="11.1" class="anchored" data-anchor-id="examples-11.1-11.3"><span class="header-section-number">11.1</span> Examples 11.1, 11.3</h2>
 <section id="load-data" class="level3" data-number="11.1.1">
 <h3 data-number="11.1.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">11.1.1</span> Load data</h3>
-<div id="1ff50a80" class="cell" data-execution_count="2">
+<div id="224956dc" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat1 <span class="op">=</span> pd.read_csv(<span class="st">"data/ch11_dat1.csv"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat1[[<span class="st">'X1'</span>, <span class="st">'X2'</span>, <span class="st">'X3'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -302,7 +302,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="11.1.2" class="anchored" data-anchor-id="ex-11.1"><span class="header-section-number">11.1.2</span> Ex 11.1</h3>
 <section id="euclidean-distance" class="level4" data-number="11.1.2.1">
 <h4 data-number="11.1.2.1" class="anchored" data-anchor-id="euclidean-distance"><span class="header-section-number">11.1.2.1</span> Euclidean distance</h4>
-<div id="6e1d1968" class="cell" data-execution_count="3">
+<div id="e209ec91" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>D1 <span class="op">=</span> pairwise.euclidean_distances(X)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>np.<span class="bu">round</span>(D1, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
@@ -329,7 +329,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Distance between 2nd object and 4th object. Please note that python’s position index start from 0, so you should use positions 1 and 3.</p>
-<div id="7649b02f" class="cell" data-execution_count="4">
+<div id="f1a5b13e" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>D1[<span class="dv">1</span>, <span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>np.float64(9.1104335791443)</code></pre>
@@ -339,7 +339,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="standardized-euclidean-distance" class="level4" data-number="11.1.2.2">
 <h4 data-number="11.1.2.2" class="anchored" data-anchor-id="standardized-euclidean-distance"><span class="header-section-number">11.1.2.2</span> Standardized Euclidean distance</h4>
 <p>Standardize data by using <code>StandardScaler</code> from <code>sklearn.preprocessing</code> module.</p>
-<div id="979d4e75" class="cell" data-execution_count="5">
+<div id="df58b4ad" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>std_X <span class="op">=</span> StandardScaler().fit_transform(X)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>std_D1 <span class="op">=</span> pairwise.euclidean_distances(std_X)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>np.<span class="bu">round</span>(std_D1, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -370,7 +370,7 @@ Note
 </div>
 </div>
 <p>Standardized distance between 2nd object and 4th object.</p>
-<div id="614c1b31" class="cell" data-execution_count="6">
+<div id="2480bf84" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>std_D1[<span class="dv">1</span>, <span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>np.float64(1.5332230530992101)</code></pre>
@@ -382,7 +382,7 @@ Note
 <h3 data-number="11.1.3" class="anchored" data-anchor-id="ex-11.3"><span class="header-section-number">11.1.3</span> Ex 11.3</h3>
 <section id="correlation-coefficients" class="level4" data-number="11.1.3.1">
 <h4 data-number="11.1.3.1" class="anchored" data-anchor-id="correlation-coefficients"><span class="header-section-number">11.1.3.1</span> Correlation coefficients</h4>
-<div id="360def41" class="cell" data-execution_count="7">
+<div id="cb5c288f" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>row_cor <span class="op">=</span> np.corrcoef(X)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>row_cor.<span class="bu">round</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
@@ -399,7 +399,7 @@ Note
 </div>
 </div>
 <p>Correlation coefficients between 1st object and 8th object.</p>
-<div id="5280eb61" class="cell" data-execution_count="8">
+<div id="5b9b9536" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>row_cor[<span class="dv">0</span>, <span class="dv">7</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>np.float64(0.8099343377536524)</code></pre>
@@ -416,7 +416,7 @@ Note
 </div>
 <div class="callout-body-container callout-body">
 <p>You can also use cosine similarity after centering by row.</p>
-<div id="2d4711b4" class="cell" data-execution_count="9">
+<div id="c60f91ff" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>centered_X <span class="op">=</span> X.to_numpy() <span class="op">-</span> np.mean(X, axis<span class="op">=</span><span class="dv">1</span>).to_numpy().reshape(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>pairwise.cosine_similarity(centered_X).<span class="bu">round</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
@@ -437,7 +437,7 @@ Note
 </section>
 <section id="after-standardization" class="level4" data-number="11.1.3.2">
 <h4 data-number="11.1.3.2" class="anchored" data-anchor-id="after-standardization"><span class="header-section-number">11.1.3.2</span> After standardization</h4>
-<div id="eb9162e8" class="cell" data-execution_count="10">
+<div id="7410e042" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>std_row_cor <span class="op">=</span> np.corrcoef(std_X)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>std_row_cor.<span class="bu">round</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
@@ -464,7 +464,7 @@ Note
 </div>
 </div>
 <p>Correlation coefficients between 1st object and 8th object after standardization.</p>
-<div id="112936b2" class="cell" data-execution_count="11">
+<div id="4e89a06e" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>std_row_cor[<span class="dv">0</span>, <span class="dv">7</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>np.float64(-0.8006555578549494)</code></pre>
@@ -477,7 +477,7 @@ Note
 <h2 data-number="11.2" class="anchored" data-anchor-id="example-11.4"><span class="header-section-number">11.2</span> Example 11.4</h2>
 <section id="load-data-1" class="level3" data-number="11.2.1">
 <h3 data-number="11.2.1" class="anchored" data-anchor-id="load-data-1"><span class="header-section-number">11.2.1</span> Load data</h3>
-<div id="0a63ec08" class="cell" data-execution_count="12">
+<div id="9bfa14df" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/ch11_dat2.csv"</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
@@ -531,7 +531,7 @@ Note
 </section>
 <section id="jaccard-index" class="level3" data-number="11.2.2">
 <h3 data-number="11.2.2" class="anchored" data-anchor-id="jaccard-index"><span class="header-section-number">11.2.2</span> Jaccard index</h3>
-<div id="a13cef98" class="cell" data-execution_count="13">
+<div id="9bf0f776" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>jaccard_sim <span class="op">=</span> np.eye(<span class="bu">len</span>(df))</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(df) <span class="op">-</span> <span class="dv">1</span>):</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i <span class="op">+</span> <span class="dv">1</span>, <span class="bu">len</span>(df)):</span>

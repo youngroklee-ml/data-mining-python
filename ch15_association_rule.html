@@ -278,7 +278,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Use <a href="https://rasbt.github.io/mlxtend/">mlxtend</a> library.</p>
-<div id="0e2798c9" class="cell" data-execution_count="1">
+<div id="ce2261f2" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mlxtend.preprocessing <span class="im">import</span> TransactionEncoder</span>
@@ -288,7 +288,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="15.1" class="anchored" data-anchor-id="examples-15.3---15.4"><span class="header-section-number">15.1</span> Examples 15.3 - 15.4</h2>
 <section id="load-data" class="level3" data-number="15.1.1">
 <h3 data-number="15.1.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">15.1.1</span> Load data</h3>
-<div id="dbd273c8" class="cell" data-execution_count="2">
+<div id="d340b339" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/ch15_transaction.csv"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df.groupby(<span class="st">'id'</span>)[<span class="st">'item'</span>].<span class="bu">apply</span>(<span class="bu">list</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -306,7 +306,7 @@ Name: item, dtype: object</code></pre>
 <section id="encode-transaction-data" class="level3" data-number="15.1.2">
 <h3 data-number="15.1.2" class="anchored" data-anchor-id="encode-transaction-data"><span class="header-section-number">15.1.2</span> Encode transaction data</h3>
 <p>Transform a list of transactions (i.e.&nbsp;a list of list of items) to a data frame that a row represents a transaction and a column represents an item.</p>
-<div id="1364aed8" class="cell" data-execution_count="3">
+<div id="4a40d418" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>enc <span class="op">=</span> TransactionEncoder()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>X_transformed <span class="op">=</span> enc.fit_transform(X)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>df_transformed <span class="op">=</span> pd.DataFrame(X_transformed, columns<span class="op">=</span>enc.columns_)</span>
@@ -391,7 +391,7 @@ Name: item, dtype: object</code></pre>
 <section id="ex-15.3-frequent-items" class="level3" data-number="15.1.3">
 <h3 data-number="15.1.3" class="anchored" data-anchor-id="ex-15.3-frequent-items"><span class="header-section-number">15.1.3</span> Ex 15.3: Frequent items</h3>
 <p>Use <code>apriori()</code> from <code>mlxtend.frequent_patterns</code> module.</p>
-<div id="53414a1a" class="cell" data-execution_count="4">
+<div id="f697f813" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>frequent_items <span class="op">=</span> apriori(df_transformed, min_support<span class="op">=</span><span class="fl">0.4</span>, use_colnames<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>frequent_items</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -441,27 +441,27 @@ Name: item, dtype: object</code></pre>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">6</td>
 <td>0.4</td>
-<td>(b, a)</td>
+<td>(a, b)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">7</td>
 <td>0.8</td>
-<td>(b, c)</td>
+<td>(c, b)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">8</td>
 <td>0.6</td>
-<td>(b, e)</td>
+<td>(e, b)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">9</td>
 <td>0.6</td>
-<td>(b, f)</td>
+<td>(f, b)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">10</td>
 <td>0.6</td>
-<td>(b, g)</td>
+<td>(g, b)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">11</td>
@@ -486,22 +486,22 @@ Name: item, dtype: object</code></pre>
 <tr class="even">
 <td data-quarto-table-cell-role="th">15</td>
 <td>0.4</td>
-<td>(b, c, e)</td>
+<td>(c, e, b)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">16</td>
 <td>0.4</td>
-<td>(b, c, f)</td>
+<td>(c, f, b)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">17</td>
 <td>0.6</td>
-<td>(b, c, g)</td>
+<td>(c, g, b)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">18</td>
 <td>0.6</td>
-<td>(b, f, e)</td>
+<td>(e, f, b)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">19</td>
@@ -511,7 +511,7 @@ Name: item, dtype: object</code></pre>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">20</td>
 <td>0.4</td>
-<td>(f, b, c, e)</td>
+<td>(c, e, f, b)</td>
 </tr>
 </tbody>
 </table>
@@ -524,7 +524,7 @@ Name: item, dtype: object</code></pre>
 <section id="ex-15.4-association-rules" class="level3" data-number="15.1.4">
 <h3 data-number="15.1.4" class="anchored" data-anchor-id="ex-15.4-association-rules"><span class="header-section-number">15.1.4</span> Ex 15.4: Association rules</h3>
 <p>Use <code>association_rules()</code> from <code>mlxtend.frequent_patterns</code> module.</p>
-<div id="a6e3cc12" class="cell" data-execution_count="5">
+<div id="d6459bfc" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rules <span class="op">=</span> association_rules(frequent_items, metric<span class="op">=</span><span class="st">'confidence'</span>, min_threshold<span class="op">=</span><span class="fl">0.7</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rules</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
@@ -564,19 +564,6 @@ Name: item, dtype: object</code></pre>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>(b)</td>
-<td>(c)</td>
-<td>1.0</td>
-<td>0.8</td>
-<td>0.8</td>
-<td>0.80</td>
-<td>1.000000</td>
-<td>0.00</td>
-<td>1.0</td>
-<td>0.000000</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
 <td>(c)</td>
 <td>(b)</td>
 <td>0.8</td>
@@ -586,6 +573,19 @@ Name: item, dtype: object</code></pre>
 <td>1.000000</td>
 <td>0.00</td>
 <td>inf</td>
+<td>0.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>(b)</td>
+<td>(c)</td>
+<td>1.0</td>
+<td>0.8</td>
+<td>0.8</td>
+<td>0.80</td>
+<td>1.000000</td>
+<td>0.00</td>
+<td>1.0</td>
 <td>0.000000</td>
 </tr>
 <tr class="even">
@@ -707,32 +707,6 @@ Name: item, dtype: object</code></pre>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">12</td>
-<td>(b, c)</td>
-<td>(g)</td>
-<td>0.8</td>
-<td>0.6</td>
-<td>0.6</td>
-<td>0.75</td>
-<td>1.250000</td>
-<td>0.12</td>
-<td>1.6</td>
-<td>1.000000</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">13</td>
-<td>(b, g)</td>
-<td>(c)</td>
-<td>0.6</td>
-<td>0.8</td>
-<td>0.6</td>
-<td>1.00</td>
-<td>1.250000</td>
-<td>0.12</td>
-<td>inf</td>
-<td>0.500000</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">14</td>
 <td>(c, g)</td>
 <td>(b)</td>
 <td>0.6</td>
@@ -745,9 +719,35 @@ Name: item, dtype: object</code></pre>
 <td>0.000000</td>
 </tr>
 <tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>(c, b)</td>
+<td>(g)</td>
+<td>0.8</td>
+<td>0.6</td>
+<td>0.6</td>
+<td>0.75</td>
+<td>1.250000</td>
+<td>0.12</td>
+<td>1.6</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>(g, b)</td>
+<td>(c)</td>
+<td>0.6</td>
+<td>0.8</td>
+<td>0.6</td>
+<td>1.00</td>
+<td>1.250000</td>
+<td>0.12</td>
+<td>inf</td>
+<td>0.500000</td>
+</tr>
+<tr class="even">
 <td data-quarto-table-cell-role="th">15</td>
 <td>(c)</td>
-<td>(b, g)</td>
+<td>(g, b)</td>
 <td>0.8</td>
 <td>0.6</td>
 <td>0.6</td>
@@ -760,7 +760,7 @@ Name: item, dtype: object</code></pre>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">16</td>
 <td>(g)</td>
-<td>(b, c)</td>
+<td>(c, b)</td>
 <td>0.6</td>
 <td>0.8</td>
 <td>0.6</td>
@@ -772,16 +772,16 @@ Name: item, dtype: object</code></pre>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">17</td>
-<td>(b, f)</td>
-<td>(e)</td>
+<td>(f, e)</td>
+<td>(b)</td>
 <td>0.6</td>
-<td>0.6</td>
+<td>1.0</td>
 <td>0.6</td>
 <td>1.00</td>
-<td>1.666667</td>
-<td>0.24</td>
-<td>inf</td>
 <td>1.000000</td>
+<td>0.00</td>
+<td>inf</td>
+<td>0.000000</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">18</td>
@@ -798,21 +798,21 @@ Name: item, dtype: object</code></pre>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">19</td>
-<td>(f, e)</td>
-<td>(b)</td>
+<td>(f, b)</td>
+<td>(e)</td>
 <td>0.6</td>
-<td>1.0</td>
+<td>0.6</td>
 <td>0.6</td>
 <td>1.00</td>
-<td>1.000000</td>
-<td>0.00</td>
+<td>1.666667</td>
+<td>0.24</td>
 <td>inf</td>
-<td>0.000000</td>
+<td>1.000000</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">20</td>
-<td>(f)</td>
-<td>(b, e)</td>
+<td>(e)</td>
+<td>(f, b)</td>
 <td>0.6</td>
 <td>0.6</td>
 <td>0.6</td>
@@ -824,8 +824,8 @@ Name: item, dtype: object</code></pre>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">21</td>
-<td>(e)</td>
-<td>(b, f)</td>
+<td>(f)</td>
+<td>(b, e)</td>
 <td>0.6</td>
 <td>0.6</td>
 <td>0.6</td>
@@ -863,19 +863,6 @@ Name: item, dtype: object</code></pre>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">24</td>
-<td>(c, b, f)</td>
-<td>(e)</td>
-<td>0.4</td>
-<td>0.6</td>
-<td>0.4</td>
-<td>1.00</td>
-<td>1.666667</td>
-<td>0.16</td>
-<td>inf</td>
-<td>0.666667</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">25</td>
 <td>(c, f, e)</td>
 <td>(b)</td>
 <td>0.4</td>
@@ -887,10 +874,23 @@ Name: item, dtype: object</code></pre>
 <td>inf</td>
 <td>0.000000</td>
 </tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">25</td>
+<td>(c, b, e)</td>
+<td>(f)</td>
+<td>0.4</td>
+<td>0.6</td>
+<td>0.4</td>
+<td>1.00</td>
+<td>1.666667</td>
+<td>0.16</td>
+<td>inf</td>
+<td>0.666667</td>
+</tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">26</td>
-<td>(b, c, e)</td>
-<td>(f)</td>
+<td>(c, f, b)</td>
+<td>(e)</td>
 <td>0.4</td>
 <td>0.6</td>
 <td>0.4</td>
@@ -902,8 +902,8 @@ Name: item, dtype: object</code></pre>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">27</td>
-<td>(c, f)</td>
-<td>(b, e)</td>
+<td>(c, e)</td>
+<td>(f, b)</td>
 <td>0.4</td>
 <td>0.6</td>
 <td>0.4</td>
@@ -915,8 +915,8 @@ Name: item, dtype: object</code></pre>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">28</td>
-<td>(c, e)</td>
-<td>(b, f)</td>
+<td>(c, f)</td>
+<td>(b, e)</td>
 <td>0.4</td>
 <td>0.6</td>
 <td>0.4</td>
