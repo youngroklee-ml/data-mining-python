@@ -1,0 +1,99 @@
+# Ensemble
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingRegressor, GradientBoostingClassifier
+from sklearn.tree import plot_tree
+from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
+from sklearn.metrics import accuracy_score, confusion_matrix, roc_auc_score
+
+#######################################
+# Example 10.2 - 10.3
+#######################################
+
+# Load data
+dat = pd.read_csv("data/ch10_dat1.csv")
+X = OneHotEncoder().fit_transform(dat[['X1', 'X2', 'X3', 'X4']])
+enc = LabelBinarizer().fit(dat['Y'])
+y = enc.transform(dat['Y']).ravel()
+
+# Ex 10.2: Train random forest classifier
+
+rf = RandomForestClassifier(n_estimators=4, oob_score=True, random_state=3280612)
+rf.fit(X, y)
+
+# Visualize each tree in the random forest.
+for m in rf.estimators_:
+  plot_tree(m)
+  plt.show()
+
+# Ex 10.3: OOB prediction
+
+# Out-of-bag probability prediction:
+rf.oob_decision_function_
+
+y_oob = np.argmax(rf.oob_decision_function_, axis = 1)
+y_oob
+
+# Confusion matrix on OOB prediction:
+confusion_matrix(y, y_oob)
+
+
+#######################################
+# Example 10.5
+#######################################
+
+# Load data
+dat = pd.read_csv("data/ch10_dat3.csv")
+X = dat[['X']]
+y = dat['Y']
+
+# Estimate GBM
+gbm_model = GradientBoostingRegressor(n_estimators=5, max_depth=1, learning_rate=1)
+gbm_model.fit(X, y)
+
+# Visualize function
+X_new = pd.DataFrame.from_dict({'X': np.arange(start=-5, stop=5, step=0.01)})
+y_pred = gbm_model.predict(X_new)
+
+plt.figure()
+plt.scatter(X, y)
+plt.plot(X_new, y_pred, color='orange')
+plt.show()
+
+
+#######################################
+# Example 10.6
+#######################################
+
+# Load data
+dat = pd.read_csv("data/ch8_dat1.csv")
+X = dat[['x1', 'x2']]
+y = LabelBinarizer().fit_transform(dat['class']).ravel()
+
+# Small GBM Classifier
+# Let us use only two trees (i.e. `n_estimator = 2`)
+gbm_model = GradientBoostingClassifier(n_estimators=2, max_depth=1, learning_rate=1)
+gbm_model.fit(X, y)
+
+# Prediction
+# Posterior:
+y_posterior = gbm_model.predict_proba(X)
+y_posterior
+
+# Area under the ROC curve:
+roc_auc_score(y, y_posterior[:, 1])
+
+
+# Larger model
+# Let us increase number of trees, while reducing step size:
+gbm_model = GradientBoostingClassifier(n_estimators=100, max_depth=1, learning_rate=0.1)
+gbm_model.fit(X, y)
+
+# Posterior:
+y_posterior = gbm_model.predict_proba(X)
+y_posterior
+
+# AUC:
+roc_auc_score(y, y_posterior[:, 1])

@@ -1,0 +1,106 @@
+# Support vector machine
+
+import pandas as pd
+import numpy as np
+from sklearn.svm import SVC
+from sklearn.preprocessing import LabelBinarizer
+from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.model_selection import train_test_split
+
+#######################################
+# Example 9.1
+#######################################
+
+# Load data
+dat = pd.read_csv("data/ch9_dat1.csv")
+X = dat[['x1', 'x2']]
+y = LabelBinarizer(neg_label=-1, pos_label=1).fit_transform(dat['class']).ravel()
+
+# Linear SVM: Separable
+svm_model = SVC(kernel='linear', C=100)
+svm_model.fit(X, y)
+
+# Hyperplane intercept:
+svm_model.intercept_
+
+# Hyperplane coefficients:
+svm_model.coef_
+
+
+#######################################
+# Example 9.2
+#######################################
+
+# Load data
+dat = pd.read_csv("data/ch9_dat2.csv")
+X = dat[['x1', 'x2']]
+y = LabelBinarizer(neg_label=-1, pos_label=1).fit_transform(dat['class']).ravel()
+
+# Linear SVM: Inseparable
+Cs = (1, 5, 100)
+svm_models = [SVC(C=c, kernel='linear') for c in Cs]
+svm_models = [m.fit(X, y) for m in svm_models]
+
+for i in range(len(Cs)):
+  print(f"C = {Cs[i]}, Intercept = {svm_models[i].intercept_}, Coefficients = {svm_models[i].coef_}")
+
+
+#######################################
+# Example 9.7
+#######################################
+
+# Load data
+dat = pd.read_csv("data/ch9_dat3.csv")
+X = dat[['x1', 'x2']]
+y = LabelBinarizer(neg_label=-1, pos_label=1).fit_transform(dat['class']).ravel()
+
+# Nonlinear SVM: Polynomial
+# See [kernel function parameterization](https://scikit-learn.org/stable/modules/svm.html#svm-kernels)
+Cs = (1, 5, 100)
+svm_models = [SVC(C=c, kernel='poly', degree=2, gamma=1) for c in Cs]
+svm_models = [m.fit(X, y) for m in svm_models]
+
+for i in range(len(Cs)):
+  print(f"C = {Cs[i]}, SV = {svm_models[i].support_}")
+
+
+#######################################
+# Example 9.8
+#######################################
+
+# Load data
+dat = pd.read_csv("data/breast-cancer-wisconsin.csv").dropna()
+X = dat.iloc[:, 1:10]
+y = LabelBinarizer().fit_transform(dat['class']).ravel()
+
+# Train/test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1/3, random_state=42724)
+
+# Nonlinear SVM: RBF Kernel with `gamma=0.5`
+# See [kernel function parameterization](https://scikit-learn.org/stable/modules/svm.html#svm-kernels)
+svm_model = SVC(kernel='rbf', C=10, gamma=0.5)
+svm_model.fit(X_train, y_train)
+
+# Number of support vectors
+svm_model.n_support_
+
+# In-sample prediction
+confusion_matrix(y_train, svm_model.predict(X_train))
+
+# Out-of-sample prediction
+confusion_matrix(y_test, svm_model.predict(X_test))
+
+
+# Nonlinear SVM: RBF Kernel with `gamma=2`
+# See [kernel function parameterization](https://scikit-learn.org/stable/modules/svm.html#svm-kernels)
+svm_model = SVC(kernel='rbf', C=10, gamma=2)
+svm_model.fit(X_train, y_train)
+
+# Number of support vectors
+svm_model.n_support_
+
+# In-sample prediction
+confusion_matrix(y_train, svm_model.predict(X_train))
+
+# Out-of-sample prediction
+confusion_matrix(y_test, svm_model.predict(X_test))
