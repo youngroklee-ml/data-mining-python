@@ -34,9 +34,9 @@ svm_model.fit(X_train, y_train)
 
 # confusion matrix on train data
 cm_train = confusion_matrix(y_train, svm_model.predict(X_train))
-print(cm_train)
+print(cm_train.T)
 
 # confusion matrix on test data
 cm_test = confusion_matrix(y_test, svm_model.predict(X_test))
-print(cm_test)
+print(cm_test.T)
 
