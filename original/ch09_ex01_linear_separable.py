@@ -27,9 +27,6 @@ print(svm_model.support_)
 alphas = np.abs(svm_model.dual_coef_)
 print(alphas)
 
-# ensure separable
-assert (np.sign(svm_model.dual_coef_) == y[svm_model.support_]).all()
-
 # objective value
 obj_value = (
   np.sum(alphas) - 
@@ -47,3 +44,6 @@ print(w)
 # hyperplane intercept b
 b = svm_model.intercept_
 print(b)
+
+# ensure separable
+assert (svm_model.predict(X) == y).all()
