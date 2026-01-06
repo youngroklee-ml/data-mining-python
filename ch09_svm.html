@@ -293,7 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="23703ba0" class="cell" data-execution_count="1">
+<div id="e41c1acf" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.svm <span class="im">import</span> SVC</span>
@@ -305,7 +305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="9.1" class="anchored" data-anchor-id="example-9.1"><span class="header-section-number">9.1</span> Example 9.1</h2>
 <section id="load-data" class="level3" data-number="9.1.1">
 <h3 data-number="9.1.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">9.1.1</span> Load data</h3>
-<div id="d535da83" class="cell" data-execution_count="2">
+<div id="662d9875" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> pd.read_csv(<span class="st">"data/ch9_dat1.csv"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat[[<span class="st">'x1'</span>, <span class="st">'x2'</span>]]</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> LabelBinarizer(neg_label<span class="op">=-</span><span class="dv">1</span>, pos_label<span class="op">=</span><span class="dv">1</span>).fit_transform(dat[<span class="st">'class'</span>]).ravel()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -313,7 +313,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="linear-svm-separable" class="level3" data-number="9.1.2">
 <h3 data-number="9.1.2" class="anchored" data-anchor-id="linear-svm-separable"><span class="header-section-number">9.1.2</span> Linear SVM: Separable</h3>
-<div id="c90b2496" class="cell" data-execution_count="3">
+<div id="d20c3147" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>svm_model <span class="op">=</span> SVC(kernel<span class="op">=</span><span class="st">'linear'</span>, C<span class="op">=</span><span class="dv">100</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>svm_model.fit(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
@@ -725,14 +725,14 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>Hyperplane intercept:</p>
-<div id="882d706b" class="cell" data-execution_count="4">
+<div id="606ac698" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>svm_model.intercept_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>array([-6.9995])</code></pre>
 </div>
 </div>
 <p>Hyperplane coefficients:</p>
-<div id="2a414536" class="cell" data-execution_count="5">
+<div id="8ce2880c" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>svm_model.coef_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>array([[0.6664, 0.6668]])</code></pre>
@@ -744,7 +744,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <h2 data-number="9.2" class="anchored" data-anchor-id="example-9.2"><span class="header-section-number">9.2</span> Example 9.2</h2>
 <section id="load-data-1" class="level3" data-number="9.2.1">
 <h3 data-number="9.2.1" class="anchored" data-anchor-id="load-data-1"><span class="header-section-number">9.2.1</span> Load data</h3>
-<div id="ebc1a2ad" class="cell" data-execution_count="6">
+<div id="b7277510" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> pd.read_csv(<span class="st">"data/ch9_dat2.csv"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat[[<span class="st">'x1'</span>, <span class="st">'x2'</span>]]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> LabelBinarizer(neg_label<span class="op">=-</span><span class="dv">1</span>, pos_label<span class="op">=</span><span class="dv">1</span>).fit_transform(dat[<span class="st">'class'</span>]).ravel()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -752,7 +752,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </section>
 <section id="linear-svm-inseparable" class="level3" data-number="9.2.2">
 <h3 data-number="9.2.2" class="anchored" data-anchor-id="linear-svm-inseparable"><span class="header-section-number">9.2.2</span> Linear SVM: Inseparable</h3>
-<div id="f9a99d10" class="cell" data-execution_count="7">
+<div id="c6205023" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Cs <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">100</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>svm_models <span class="op">=</span> [SVC(C<span class="op">=</span>c, kernel<span class="op">=</span><span class="st">'linear'</span>) <span class="cf">for</span> c <span class="kw">in</span> Cs]</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>svm_models <span class="op">=</span> [m.fit(X, y) <span class="cf">for</span> m <span class="kw">in</span> svm_models]</span>
@@ -771,7 +771,7 @@ C = 100, Intercept = [-9.3975255], Coefficients = [[0.39989831 1.19969492]]</cod
 <h2 data-number="9.3" class="anchored" data-anchor-id="example-9.7"><span class="header-section-number">9.3</span> Example 9.7</h2>
 <section id="load-data-2" class="level3" data-number="9.3.1">
 <h3 data-number="9.3.1" class="anchored" data-anchor-id="load-data-2"><span class="header-section-number">9.3.1</span> Load data</h3>
-<div id="8954beb3" class="cell" data-execution_count="8">
+<div id="73086dd3" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> pd.read_csv(<span class="st">"data/ch9_dat3.csv"</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat[[<span class="st">'x1'</span>, <span class="st">'x2'</span>]]</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> LabelBinarizer(neg_label<span class="op">=-</span><span class="dv">1</span>, pos_label<span class="op">=</span><span class="dv">1</span>).fit_transform(dat[<span class="st">'class'</span>]).ravel()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -780,7 +780,7 @@ C = 100, Intercept = [-9.3975255], Coefficients = [[0.39989831 1.19969492]]</cod
 <section id="nonlinear-svm-polynomial" class="level3" data-number="9.3.2">
 <h3 data-number="9.3.2" class="anchored" data-anchor-id="nonlinear-svm-polynomial"><span class="header-section-number">9.3.2</span> Nonlinear SVM: Polynomial</h3>
 <p>See <a href="https://scikit-learn.org/stable/modules/svm.html#svm-kernels">kernel function parameterization</a></p>
-<div id="4a790224" class="cell" data-execution_count="9">
+<div id="991ac50b" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Cs <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">100</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>svm_models <span class="op">=</span> [SVC(C<span class="op">=</span>c, kernel<span class="op">=</span><span class="st">'poly'</span>, degree<span class="op">=</span><span class="dv">2</span>, gamma<span class="op">=</span><span class="dv">1</span>) <span class="cf">for</span> c <span class="kw">in</span> Cs]</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>svm_models <span class="op">=</span> [m.fit(X, y) <span class="cf">for</span> m <span class="kw">in</span> svm_models]</span>
@@ -799,7 +799,7 @@ C = 100, SV = [1 2 0 5 6]</code></pre>
 <h2 data-number="9.4" class="anchored" data-anchor-id="example-9.8"><span class="header-section-number">9.4</span> Example 9.8</h2>
 <section id="load-data-3" class="level3" data-number="9.4.1">
 <h3 data-number="9.4.1" class="anchored" data-anchor-id="load-data-3"><span class="header-section-number">9.4.1</span> Load data</h3>
-<div id="628241f7" class="cell" data-execution_count="10">
+<div id="4cf12145" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dat <span class="op">=</span> pd.read_csv(<span class="st">"data/breast-cancer-wisconsin.csv"</span>).dropna()</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> dat.iloc[:, <span class="dv">1</span>:<span class="dv">10</span>]</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> LabelBinarizer().fit_transform(dat[<span class="st">'class'</span>]).ravel()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -807,14 +807,14 @@ C = 100, SV = [1 2 0 5 6]</code></pre>
 </section>
 <section id="traintest-split" class="level3" data-number="9.4.2">
 <h3 data-number="9.4.2" class="anchored" data-anchor-id="traintest-split"><span class="header-section-number">9.4.2</span> Train/test split</h3>
-<div id="6f31f838" class="cell" data-execution_count="11">
+<div id="b7d0694b" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="dv">1</span><span class="op">/</span><span class="dv">3</span>, random_state<span class="op">=</span><span class="dv">42724</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="nonlinear-svm-rbf-kernel-with-gamma0.5" class="level3" data-number="9.4.3">
 <h3 data-number="9.4.3" class="anchored" data-anchor-id="nonlinear-svm-rbf-kernel-with-gamma0.5"><span class="header-section-number">9.4.3</span> Nonlinear SVM: RBF Kernel with <code>gamma=0.5</code></h3>
 <p>See <a href="https://scikit-learn.org/stable/modules/svm.html#svm-kernels">kernel function parameterization</a></p>
-<div id="668fc137" class="cell" data-execution_count="12">
+<div id="90b675a1" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>svm_model <span class="op">=</span> SVC(kernel<span class="op">=</span><span class="st">'rbf'</span>, C<span class="op">=</span><span class="dv">10</span>, gamma<span class="op">=</span><span class="fl">0.5</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>svm_model.fit(X_train, y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
@@ -1226,7 +1226,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>Number of support vectors</p>
-<div id="b36371c9" class="cell" data-execution_count="13">
+<div id="594a4812" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>svm_model.n_support_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>array([117, 160], dtype=int32)</code></pre>
@@ -1234,7 +1234,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 <section id="in-sample-prediction" class="level4" data-number="9.4.3.1">
 <h4 data-number="9.4.3.1" class="anchored" data-anchor-id="in-sample-prediction"><span class="header-section-number">9.4.3.1</span> In-sample prediction</h4>
-<div id="f436115b" class="cell" data-execution_count="14">
+<div id="28bb2e9f" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>confusion_matrix(y_train, svm_model.predict(X_train))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>array([[294,   0],
@@ -1244,7 +1244,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </section>
 <section id="out-of-sample-prediction" class="level4" data-number="9.4.3.2">
 <h4 data-number="9.4.3.2" class="anchored" data-anchor-id="out-of-sample-prediction"><span class="header-section-number">9.4.3.2</span> Out-of-sample prediction</h4>
-<div id="dd3eb9e9" class="cell" data-execution_count="15">
+<div id="73684609" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>confusion_matrix(y_test, svm_model.predict(X_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>array([[140,  10],
@@ -1256,7 +1256,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <section id="nonlinear-svm-rbf-kernel-with-gamma2" class="level3" data-number="9.4.4">
 <h3 data-number="9.4.4" class="anchored" data-anchor-id="nonlinear-svm-rbf-kernel-with-gamma2"><span class="header-section-number">9.4.4</span> Nonlinear SVM: RBF Kernel with <code>gamma=2</code></h3>
 <p>See <a href="https://scikit-learn.org/stable/modules/svm.html#svm-kernels">kernel function parameterization</a></p>
-<div id="78d35eb1" class="cell" data-execution_count="16">
+<div id="3e278b67" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>svm_model <span class="op">=</span> SVC(kernel<span class="op">=</span><span class="st">'rbf'</span>, C<span class="op">=</span><span class="dv">10</span>, gamma<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>svm_model.fit(X_train, y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
@@ -1668,7 +1668,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 <p>Number of support vectors</p>
-<div id="c2fe4042" class="cell" data-execution_count="17">
+<div id="6488d472" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>svm_model.n_support_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>array([165, 160], dtype=int32)</code></pre>
@@ -1676,7 +1676,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 <section id="in-sample-prediction-1" class="level4" data-number="9.4.4.1">
 <h4 data-number="9.4.4.1" class="anchored" data-anchor-id="in-sample-prediction-1"><span class="header-section-number">9.4.4.1</span> In-sample prediction</h4>
-<div id="d82a6c6b" class="cell" data-execution_count="18">
+<div id="9e01322c" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>confusion_matrix(y_train, svm_model.predict(X_train))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>array([[294,   0],
@@ -1686,7 +1686,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </section>
 <section id="out-of-sample-prediction-1" class="level4" data-number="9.4.4.2">
 <h4 data-number="9.4.4.2" class="anchored" data-anchor-id="out-of-sample-prediction-1"><span class="header-section-number">9.4.4.2</span> Out-of-sample prediction</h4>
-<div id="98de2e0c" class="cell" data-execution_count="19">
+<div id="87faebaa" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>confusion_matrix(y_test, svm_model.predict(X_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>array([[128,  22],
