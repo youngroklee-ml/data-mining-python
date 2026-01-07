@@ -46,6 +46,6 @@ Use `association_rules()` from `mlxtend.frequent_patterns` module.
 
 ```{python}
 rules = association_rules(frequent_items, metric='confidence', min_threshold=0.7)
-rules
+print(rules[['antecedents', 'consequents', 'antecedent support', 'support', 'confidence', 'lift']])
 ```
 
