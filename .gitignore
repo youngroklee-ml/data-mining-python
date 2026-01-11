@@ -6,3 +6,5 @@
 _book/
 *.ipynb
 __pycache__/
+
+experimental/
