@@ -7,7 +7,7 @@ import numpy as np
 from sklearn.metrics import silhouette_score
 from sklearn.cluster import AgglomerativeClustering
 import matplotlib.pyplot as plt
-from scipy.spatial.distance import pdist
+from scipy.spatial.distance import pdist, squareform
 from scipy.cluster.hierarchy import linkage, dendrogram
 
 #######################################
@@ -24,7 +24,7 @@ n = X.shape[0]
 
 # Euclidean distance 
 D1 = pdist(X, metric="euclidean")
-print(np.round(D1, 2))
+print(squareform(np.round(D1, 2)))
 
 # linkage method is 'average'
 Z = linkage(D1, method="average")
@@ -38,7 +38,7 @@ dendrogram(
 )
 
 plt.title("Average linkage with Euclidean distance")
-plt.xlabel("observation")
+plt.xlabel("Observation")
 plt.ylabel("Distance")
 plt.tight_layout()
 plt.show()
@@ -49,18 +49,17 @@ plt.show()
 
 # Load data
 dat2 = pd.read_csv("data/ch12_dat2.csv")
-X = dat2.drop('ID', axis=1)
-
-# to keep ID i to n
-X.index = range(1, len(X) + 1)
+X = dat2.set_index('ID')
 n = X.shape[0]
 
-# Euclidean squared distance 
-sq_dist = pdist(X, metric="sqeuclidean")
-sq_dist
+# Euclidean distance 
+D2 = pdist(X, metric="euclidean")
 
-# linkage method is 'ward'
-Z = linkage(sq_dist, method="ward")
+# Print squared Euclidean distance
+print(squareform(np.round(D2**2, 2)))
+
+# linkage method is 'ward' with Euclidean distance
+Z = linkage(D2, method="ward")
 
 plt.figure(figsize=(8, 4))
 dendrogram(
@@ -70,7 +69,7 @@ dendrogram(
     leaf_font_size=9
 )
 plt.title("Ward's linkage with Euclidean distance")
-plt.xlabel("observation")
+plt.xlabel("Observation")
 plt.ylabel("Distance")
 plt.tight_layout()
 plt.show()
