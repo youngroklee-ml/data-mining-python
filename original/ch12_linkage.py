@@ -23,11 +23,11 @@ X.index = range(1, len(X) + 1)
 n = X.shape[0]
 
 # Euclidean distance 
-D1 = pdist(X, metric="euclidean")
+D1 = pdist(X, metric='euclidean')
 print(squareform(np.round(D1, 2)))
 
 # linkage method is 'average'
-Z = linkage(D1, method="average")
+Z = linkage(D1, method='average')
 
 plt.figure(figsize=(8, 4))
 dendrogram(
@@ -53,13 +53,13 @@ X = dat2.set_index('ID')
 n = X.shape[0]
 
 # Euclidean distance 
-D2 = pdist(X, metric="euclidean")
+D2 = pdist(X, metric='euclidean')
 
 # Print squared Euclidean distance
 print(squareform(np.round(D2**2, 2)))
 
 # linkage method is 'ward' with Euclidean distance
-Z = linkage(D2, method="ward")
+Z = linkage(D2, method='ward')
 
 plt.figure(figsize=(8, 4))
 dendrogram(
