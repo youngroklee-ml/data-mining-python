@@ -31,8 +31,6 @@ D1[1, 3]
 # may use `StandardScaler` for standazation
 
 x_std = (X - X.mean(axis=0)) / X.std(axis=0, ddof=1)
-D_py = pairwise_distances(x_std)
-
 std_D1 = pairwise.euclidean_distances(x_std)
 np.round(std_D1, 2)
 
